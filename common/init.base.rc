@@ -32,30 +32,21 @@ on early-boot
     # tracefs is mounted after 1st access to it
     chmod 0755 /sys/kernel/debug/tracing
 
-
-setprop container.memnodes 0
-setprop container.cpus 0-3
-
-on init && property:ro.boot.container.memnodes=*
-    setprop container.memnodes ${ro.boot.container.memnodes}
-on init && property:ro.boot.container.cpus=*
-    setprop container.cpus ${ro.boot.container.cpus}
-
 on init
-    write /dev/cpuset/foreground/cpuset.cpus ${container.cpus}
-    write /dev/cpuset/foreground/cpuset.mems ${container.memnodes}
+    copy /dev/cpuset/cpuset.cpus /dev/cpuset/foreground/cpuset.cpus
+    copy /dev/cpuset/cpuset.mems /dev/cpuset/foreground/cpuset.mems
 
-    write /dev/cpuset/background/cpuset.cpus ${container.cpus}
-    write /dev/cpuset/background/cpuset.mems ${container.memnodes}
+    copy /dev/cpuset/cpuset.cpus /dev/cpuset/background/cpuset.cpus
+    copy /dev/cpuset/cpuset.mems /dev/cpuset/background/cpuset.mems
 
-    write /dev/cpuset/system-background/cpuset.cpus ${container.cpus}
-    write /dev/cpuset/system-background/cpuset.mems ${container.memnodes}
+    copy /dev/cpuset/cpuset.cpus /dev/cpuset/system-background/cpuset.cpus
+    copy /dev/cpuset/cpuset.mems /dev/cpuset/system-background/cpuset.mems
 
-    write /dev/cpuset/restricted/cpuset.cpus ${container.cpus}
-    write /dev/cpuset/restricted/cpuset.mems ${container.memnodes}
+    copy /dev/cpuset/cpuset.cpus /dev/cpuset/restricted/cpuset.cpus
+    copy /dev/cpuset/cpuset.mems /dev/cpuset/restricted/cpuset.mems
 
-    write /dev/cpuset/top-app/cpuset.cpus ${container.cpus}
-    write /dev/cpuset/top-app/cpuset.mems ${container.memnodes}
+    copy /dev/cpuset/cpuset.cpus /dev/cpuset/top-app/cpuset.cpus
+    copy /dev/cpuset/cpuset.mems /dev/cpuset/top-app/cpuset.mems
 
 on fs
     mount_all /fstab.${ro.hardware}
