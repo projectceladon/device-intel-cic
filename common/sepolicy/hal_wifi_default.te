@@ -1,0 +1,2 @@
+# WiFi emulation
+allow hal_wifi_default self:netlink_route_socket { create_socket_perms_no_ioctl nlmsg_read };

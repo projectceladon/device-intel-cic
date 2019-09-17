@@ -1,0 +1,11 @@
+/dev/dri(/.*)?              u:object_r:gpu_device:s0
+/android-entry              u:object_r:rootfs:s0
+/[^/]+\.img                 u:object_r:rootfs:s0
+/ipc(/.*)?                  u:object_r:rootfs:s0
+/cmdline                    u:object_r:rootfs:s0
+/proc/cmdline               u:object_r:proc_cmdline:s0
+
+# copy /system/etc to /etc instead of useing symbolic link
+# Docker will remove the /etc link and create a directory to override some files
+# such as /etc/hosts, /etc/hostname, etc.
+/etc(/.*)?                  u:object_r:system_file:s0

@@ -1,0 +1,32 @@
+From 2ed01c3cfbacf9d72482e7717736d14a1a6191ad Mon Sep 17 00:00:00 2001
+From: Bin Yang <bin.y.yang@intel.com>
+Date: Sun, 2 Jun 2019 19:39:55 +0800
+Subject: [PATCH 2/2] [upstreaming] a corncase in network, which should be
+ upstreaming
+
+Change-Id: Ia965259d1a2eb053440df417ee621f320ec711f0
+Tracked-On:
+Signed-off-by: Bin Yang <bin.y.yang@intel.com>
+---
+ .../com/android/server/net/NetworkPolicyManagerService.java     | 2 ++
+ 1 file changed, 2 insertions(+)
+ mode change 100644 => 100755 services/core/java/com/android/server/net/NetworkPolicyManagerService.java
+
+diff --git a/services/core/java/com/android/server/net/NetworkPolicyManagerService.java b/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
+old mode 100644
+new mode 100755
+index ab482bb2da9..d2ace941df6
+--- a/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
++++ b/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
+@@ -712,6 +712,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
+             Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
+             if (!isBandwidthControlEnabled()) {
+                 Slog.w(TAG, "bandwidth controls disabled, unable to enforce policy");
++				/*_ANDROID_AS_GUEST_ It seems it is a bug fixing, it should be upstreaming*/
++                initCompleteSignal.countDown();
+                 return;
+             }
+ 
+-- 
+2.21.0
+

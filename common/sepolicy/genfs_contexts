@@ -1,0 +1,5 @@
+genfscon sysfs /devices/pci0000:00/0000:00:02.0/ u:object_r:sysfs_app_readable:s0
+
+
+genfscon binder / u:object_r:binderfs:s0
+genfscon proc /slabinfo u:object_r:proc_slabinfo:s0

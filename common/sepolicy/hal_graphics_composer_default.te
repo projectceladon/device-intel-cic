@@ -1,0 +1,4 @@
+allow hal_graphics_composer_default sysfs_app_readable:file r_file_perms;
+allow hal_graphics_composer_default rootfs:sock_file write;
+allow hal_graphics_composer_default kernel:unix_stream_socket connectto;
+
