@@ -1,0 +1,5 @@
+type sysfs_app_readable, fs_type, sysfs_type;
+type binderfs, fs_type, mlstrustedobject;
+typeattribute hal_graphics_allocator_default_tmpfs mlstrustedobject;
+type binfmt_misc, fs_type;
+type proc_slabinfo, fs_type, proc_type;

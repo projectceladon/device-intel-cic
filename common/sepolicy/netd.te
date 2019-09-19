@@ -1,0 +1,1 @@
+allow netd usermodehelper:file r_file_perms;
