@@ -2,27 +2,27 @@
 
 ## Introduction
 
-CIC is short for [Celadon](https://01.org/projectceladon) in Container. The goal of this feature is to put [Celadon](https://01.org/projectceladon) [Android](https://www.android.com/) images in [Docker](https://www.docker.com/) containers. So that you could deploy the image on Linux devices through [Docker](https://www.docker.com/) tools. And then, you could run Android applications in it.
+The goal of [Celadon](https://01.org/projectceladon) in Container (**CIC**) feature is to run the [Celadon](https://01.org/projectceladon) [Android](https://www.android.com/) image in a [Docker](https://www.docker.com/) container, so that you can run the image on Linux devices through [Docker](https://www.docker.com/) tools, and run [Android](https://www.android.com/) applications in it.
 
 ## Version history
 
 ### v0.5
 
-CIC version 0.5 provide an early view of this feature, for pilot and development purpose. Some features, including Trusty, Verified Boot, and OTA update are not included in this version. These features is planned for upcoming releases.
+CIC version 0.5 provides a preview of the feature for pilot and development purposes. Some features such as Trusty, Verified Boot, and OTA update are not included in this preview version. Those features are planned for the upcoming releases.
 
 ## Environment
 
 ### Build machine
 
-The build environment is as same as [Celadon](https://01.org/projectceladon) project, except for the [Docker](https://www.docker.com/)
+The build environment is as same as [Celadon](https://01.org/projectceladon/documentation/getting_started/build-source#set-up-the-development-environment), except for the [Docker](https://www.docker.com/)
 
 ### Target device
 
-The recommended target devices are **NUC7i7BNH** and **NUC7i5BNH**, most of the Skylake or new generation CPU with integrated GPU should be supported
+CIC should be able to run on modern PCs with Intel® 6th generation or later processors with integrated GPU. The Intel NUC model **NUC7i7BNH** and model **NUC7i5BNH** are recommended to try out the CIC features.
 
-CIC currently requires Linux kernel version **>= 4.14.20**, many Linux operating systems are supported, the recommended ones are [Clear Linux](https://clearlinux.org/), [Rancher OS](https://rancher.com/rancher-os/) and [Ubuntu](https://ubuntu.com/)
+CIC currently requires Linux kernel version **4.14.20** or later, which is available in most Linux distributions such as [Clear Linux](https://clearlinux.org/), [Rancher OS](https://rancher.com/rancher-os/) and [Ubuntu](https://ubuntu.com/), etc.
 
-To simplify the environment, here we use [Ubuntu 16.04](http://releases.ubuntu.com/xenial/)
+The current instructions are based on [Ubuntu 16.04](http://releases.ubuntu.com/xenial/)
 
 ### Docker
 
@@ -33,23 +33,21 @@ Both build machine and target device require [Docker](https://www.docker.com/) t
     $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     $ sudo apt-get update
     $ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+If you would like to use [Docker](https://www.docker.com/) as a non-root user:
+
     $ sudo usermod -aG docker $USER
 
-Verify the [Docker](https://www.docker.com/) by running the `hello-world` image:
+Remember to log out and back in for this to take effect!
+
+Verify that the [Docker](https://www.docker.com/) is installed correctly by running the `hello-world` image:
 
     $ docker run --rm hello-world
 
 ## Download source code
 
-For the master branch ([Android](https://www.android.com/) Q)
-
-    $ repo init -u https://github.com/projectceladon/manifest.git -b celadon/master
-    $ repo sync -c --no-tags -j4
-
-For [Android](https://www.android.com/) P branch
-
     $ repo init -u https://github.com/projectceladon/manifest.git -b celadon/p/mr0/master -m cic
-    $ repo sync -c --no-tags -j4
+    $ repo sync --no-tags
 
 ## Build
 
@@ -57,12 +55,10 @@ For [Android](https://www.android.com/) P branch
 
 There are two build targets:
 
-* **cic**: target to compliance with [Android CDD](https://source.android.com/compatibility/cdd). Choose this one if [SELinux](https://github.com/SELinuxProject) is required. 
+* **cic**: target to compliant with [Android CDD](https://source.android.com/compatibility/cdd). Choose this one if [SELinux](https://github.com/SELinuxProject) is required.
 * **cic_dev**: for development purpose. Choose this one if the host OS does not support [SELinux](https://github.com/SELinuxProject).
 
-> **CAUTION**: **cic_dev** is only available on Android P branch currently
-
-Take cic_dev target for example
+Take **cic_dev** target for example
 
     $ source build/envsetup.sh
     $ lunch cic_dev-userdebug
@@ -72,9 +68,8 @@ The result package will be at `$OUT/$TARGET_PRODUCT-*.tar.gz`
 
 ## Deploy
 
-Download and extract the CIC package to the target device (here we use `cic_dev-xxxx.tar.gz` for example) and install by the `aic` script:
+Download and extract the CIC package to the target device (here we use `cic_dev-xxxx.tar.gz` for example) and install it by the `aic` script:
 
-    $ mkdir cic && cd cic
     $ tar xzf ../cic_dev-xxxx.tar.gz
     $ ./aic install
 
@@ -82,13 +77,13 @@ Now the CIC is installed, you can launch it with command:
 
     $ ./aic start
 
-Wait for a while, there will be a window pops up and you can see the [Android](https://www.android.com/) is booting up.
+A window will be pop-up showing [Android](https://www.android.com/) is booting after the CIC container is initialized and running.
 
 You can stop the CIC with command:
 
     $ ./aic stop
 
-Or uninstall it with command:
+Or uninstall it with:
 
     $ ./aic uninstall
 
@@ -115,7 +110,7 @@ index 2380b8d..fc07e55 100644
 
 ## Tips
 
-CIC is running as a [Docker](https://www.docker.com/) container, so you can use [Docker](https://www.docker.com/) CLI commands directly for debug purpose. For example, if you encounter some issues, capture necessary information by the commands:
+CIC runs as a [Docker](https://www.docker.com/) container, so you can use [Docker CLI commands](https://docs.docker.com/engine/reference/commandline/cli) directly for debugging. For example, if you encounter some issues, capture necessary information by the following commands:
 
     $ docker logs aic-manager 2>&1 | tee aic-manager.log
     $ docker exec -it android0 sh | tee android.log
