@@ -73,19 +73,20 @@ PRODUCT_PACKAGES += \
 	libstagefrighthw
 
 PRODUCT_PACKAGES += \
-     i965_drv_video \
-     libgrallocclient
+    i965_drv_video \
+    libgrallocclient
 
 PRODUCT_PACKAGES += \
-     libva-android \
-     libva
+    libva-android \
+    libva
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.hwcomposer=intel \
     ro.hardware.gralloc=intel \
     ro.hardware.gralloc_imp=intel \
     ro.hardware.hwcomposer_imp=intel \
-    ro.opengles.version=196610
+    ro.opengles.version=196610 \
+    service.adb.tcp.port=5555
 
 PRODUCT_NAME := cic_dev
 PRODUCT_DEVICE := cic_dev
