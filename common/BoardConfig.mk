@@ -52,6 +52,12 @@ WIFI_DRIVER_FW_PATH_PARAM   := "/dev/null"
 WIFI_DRIVER_FW_PATH_STA     := "/dev/null"
 WIFI_DRIVER_FW_PATH_AP      := "/dev/null"
 
+# enable rpmb simulate
+KERNELFLINGER_USE_RPMB_SIMULATE := true
+
+# enable trusty
+TARGET_USE_TRUSTY := true
+
 ####################### Houdini board config
 # Install Native Bridge
 WITH_NATIVE_BRIDGE := true
