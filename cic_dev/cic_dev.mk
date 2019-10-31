@@ -14,11 +14,13 @@
 
 $(call inherit-product,device/intel/cic/common/device.mk)
 
-TARGET_USE_GRALLOC_VHAL := true
+TARGET_USE_GRALLOC_VHAL := false
+TARGET_USE_HWCOMPOSER_VHAL := true
 TARGET_AIC_DEVICE_INPUT_FILTER := true
 TARGET_AIC_PERF := true
 
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.freeform_window_management.xml:system/etc/permissions/android.software.freeform_window_management.xml \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/vendor/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
@@ -59,7 +61,9 @@ PRODUCT_PACKAGES += gralloc.intel
 endif
 
 ifeq ($(TARGET_USE_HWCOMPOSER_VHAL), true)
-PRODUCT_PACKAGES += hwcomposer_imp.intel
+PRODUCT_COPY_FILES += \
+    vendor/intel/cic/target/graphics/edge/system/vendor/lib/hw/hwcomposer.remote.so:system/vendor/lib/hw/hwcomposer.remote.so \
+    vendor/intel/cic/target/graphics/edge/system/vendor/lib64/hw/hwcomposer.remote.so:system/vendor/lib64/hw/hwcomposer.remote.so
 else
 PRODUCT_PACKAGES += hwcomposer.intel
 endif
@@ -81,12 +85,18 @@ PRODUCT_PACKAGES += \
     libva
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hardware.hwcomposer=intel \
     ro.hardware.gralloc=intel \
     ro.hardware.gralloc_imp=intel \
-    ro.hardware.hwcomposer_imp=intel \
     ro.opengles.version=196610 \
     service.adb.tcp.port=5555
+
+ifeq ($(TARGET_USE_HWCOMPOSER_VHAL), true)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.hwcomposer=remote
+else
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.hwcomposer=intel
+endif
 
 PRODUCT_NAME := cic_dev
 PRODUCT_DEVICE := cic_dev
