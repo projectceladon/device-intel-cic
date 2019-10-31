@@ -12,8 +12,8 @@ TARGET_USE_INTEL_GRALLOC	:= true
 TARGET_USE_INTEL_HWCOMPOSER	:= false
 
 # cic vhal switches
-TARGET_USE_GRALLOC_VHAL		:= true
-TARGET_USE_HWCOMPOSER_VHAL	:= false
+TARGET_USE_GRALLOC_VHAL     := false
+TARGET_USE_HWCOMPOSER_VHAL  := true
 
 
 # components specific switches
