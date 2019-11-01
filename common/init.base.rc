@@ -7,14 +7,14 @@ import /vendor/etc/init/hw/init.crashlogd.rc
 on early-init
 
     # Create symbol link for binder device
-    chmod 0666 /binderfs/binder${ro.boot.container.id}
-    symlink /binderfs/binder${ro.boot.container.id} /dev/binder
+    chmod 0666 /binderfs/binder
+    symlink /binderfs/binder /dev/binder
 
-    chmod 0666 /binderfs/vndbinder${ro.boot.container.id}
-    symlink /binderfs/vndbinder${ro.boot.container.id} /dev/vndbinder
+    chmod 0666 /binderfs/vndbinder
+    symlink /binderfs/vndbinder /dev/vndbinder
 
-    chmod 0666 /binderfs/hwbinder${ro.boot.container.id}
-    symlink /binderfs/hwbinder${ro.boot.container.id} /dev/hwbinder
+    chmod 0666 /binderfs/hwbinder
+    symlink /binderfs/hwbinder /dev/hwbinder
 
     # Mount debugfs and make it writable so that debuggerd can
     # create stack traces, required with newer kernels
