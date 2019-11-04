@@ -1,0 +1,34 @@
+Format: 1.8
+Date: Mon, 04 Nov 2019 17:21:33 +0530
+Source: linux-4.19.80-celadon
+Binary: linux-image-4.19.80-celadon linux-headers-4.19.80-celadon linux-libc-dev linux-image-4.19.80-celadon-dbg
+Architecture: amd64
+Version: 4.19.80-celadon-1
+Distribution: xenial
+Urgency: low
+Maintainer: intel <intel@intel>
+Changed-By: intel <intel@intel>
+Description:
+ linux-headers-4.19.80-celadon - Linux kernel headers for 4.19.80-celadon on amd64
+ linux-image-4.19.80-celadon - Linux kernel, version 4.19.80-celadon
+ linux-image-4.19.80-celadon-dbg - Linux kernel debugging symbols for 4.19.80-celadon
+ linux-libc-dev - Linux support headers for userspace development
+Changes:
+ linux-4.19.80-celadon (4.19.80-celadon-1) xenial; urgency=low
+ .
+   * Custom built Linux kernel.
+Checksums-Sha1:
+ 9429dfe8241c25abfa4731adf6a392b6efdf015b 11177612 linux-headers-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ 96885e8626b6c1c8e4834d5e739dbb2ed0bd60c7 590270734 linux-image-4.19.80-celadon-dbg_4.19.80-celadon-1_amd64.deb
+ 20ed4fc93ed00057751bd787137f8ea3874df002 52680696 linux-image-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ b5ad855ad6e7cac7f7b6140b074a032c56b59431 1030460 linux-libc-dev_4.19.80-celadon-1_amd64.deb
+Checksums-Sha256:
+ 0a680e647b244a0b3fd3f253f95c4798081e6cc90f310dd742f9a84609a49b04 11177612 linux-headers-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ bc44d3a9f8a880945be2bfd36d03774dfabe7966fa4a3b9e2b49f5a3aa170e4d 590270734 linux-image-4.19.80-celadon-dbg_4.19.80-celadon-1_amd64.deb
+ 6dbc90431ebca5ae4d1ec96478307b84179ce2a1acd6fe56e779aa1b0de107a8 52680696 linux-image-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ dde181fad87afd95fc6fe8283fc15db24b4df4ac58ac3e650762fdb0ff792549 1030460 linux-libc-dev_4.19.80-celadon-1_amd64.deb
+Files:
+ 99e6bf22aae08b3dd1e547158e275594 11177612 kernel optional linux-headers-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ e477ce0b84f7a5823ff110792a86e207 590270734 debug optional linux-image-4.19.80-celadon-dbg_4.19.80-celadon-1_amd64.deb
+ 4382c02b52a586073469d81a05565885 52680696 kernel optional linux-image-4.19.80-celadon_4.19.80-celadon-1_amd64.deb
+ 070b05639ad6b6ac4d618c5938986deb 1030460 devel optional linux-libc-dev_4.19.80-celadon-1_amd64.deb

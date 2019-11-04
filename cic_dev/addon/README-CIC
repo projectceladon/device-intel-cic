@@ -1,0 +1,13 @@
+## INSTALL DOCKER
+# Run below script only for the first time
+./install-docker
+
+## INSTALL KERNEL
+# Run below script to update target kernel
+./setup-kernel
+
+## INSTALL CIC
+# install aic manager and android layers
+./aic install
+# start cic container
+./aic start
