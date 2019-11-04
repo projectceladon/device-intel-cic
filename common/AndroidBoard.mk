@@ -1,5 +1,5 @@
 .PHONY: multidroid
-multidroid: droid
+multidroid: droid addon
 	@echo Make multidroid image...
 	$(hide) rm -rf $(PRODUCT_OUT)/docker
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/android/root
@@ -27,6 +27,16 @@ endif
 
 TARGET_AIC_FILE_NAME := $(TARGET_PRODUCT)-aic-$(BUILD_NUMBER).tar.gz
 
+.PHONY: addon
+addon:
+ifeq ($(TARGET_PRODUCT), cic_dev)
+	@echo Make additional release binaries/files...
+	$(hide) rm -rf $(PRODUCT_OUT)/feature $(PRODUCT_OUT)/kernel-deb  $(PRODUCT_OUT)/pre-requisites  $(PRODUCT_OUT)/README-CIC  $(PRODUCT_OUT)/setup-aic
+	$(hide) cp -r $(TOP)/device/intel/cic/$(TARGET_PRODUCT)/addon/* $(PRODUCT_OUT)/.
+else
+	@echo Nothing todo
+endif
+
 .PHONY: aic
 aic: .KATI_NINJA_POOL := console
 aic: multidroid
@@ -36,7 +46,11 @@ ifneq ($(TARGET_LOOP_MOUNT_SYSTEM_IMAGES), true)
 else
 	BUILD_VARIANT=loop_mount $(HOST_OUT_EXECUTABLES)/aic-build -b $(BUILD_NUMBER)
 endif
+ifeq ($(TARGET_PRODUCT), cic_dev)
+	tar cvzf $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) -C $(PRODUCT_OUT) aic android.tar.gz aic-manager.tar.gz feature kernel-deb  pre-requisites  README-CIC  setup-aic -C docker update
+else
 	tar cvzf $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) -C $(PRODUCT_OUT) aic android.tar.gz aic-manager.tar.gz -C docker update
+endif
 
 .PHONY: cic
 cic: aic
