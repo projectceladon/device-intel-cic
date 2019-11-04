@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# author: sundar.gnanasekaran@intel.com
+
+echo "Installing Kernel -- START"
+sudo dpkg -i kernel-deb/*.deb
+#sudo sed -i 's/GRUB_HIDDEN_TIMEOUT/#GRUB_HIDDEN_TIMEOUT/g' /etc/default/grub
+a=`grep 'Advanced options for Ubuntu' /boot/grub/grub.cfg | cut -d"'" -f4`
+b=`grep "gnulinux" /boot/grub/grub.cfg | grep -i "celadon" | grep -v recovery | cut -d "'" -f4`
+c="\"$a>$b\""
+echo "Adding option $c to GRUB CONFIG"
+
+#sed --> Make GRUB_DEFAULT point to latest kernel
+sudo sed -i "s/GRUB_DEFAULT=.*/GRUB_DEFAULT="$c"/g" /etc/default/grub
+
+echo "Update GRUB -- Start"
+sudo update-grub
+
+echo "Installing Kernel -- DONE"
