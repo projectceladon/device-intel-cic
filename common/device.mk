@@ -40,7 +40,7 @@ $(call inherit-product, $(LOCAL_PATH)/options/debug-logs/$(OPTION_CRASHLOGD)/pro
 $(call inherit-product, $(LOCAL_PATH)/options/debug-crashlogd/$(OPTION_CRASHLOGD)/product.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/board/generic_x86_64/device.mk)
 
 PRODUCT_CHARACTERISTICS := tablet
@@ -54,6 +54,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/vendor/etc/media_codecs_google_video.xml
 
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml   \
     frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.software.app_widgets.xml:system/etc/permissions/android.software.app_widgets.xml \
     $(LOCAL_PATH)/android-removed-permissions.xml:system/etc/permissions/android-removed-permissions.xml \
