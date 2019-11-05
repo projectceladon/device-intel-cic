@@ -30,6 +30,12 @@ PRODUCT_COPY_FILES += \
     device/intel/cic/common/media_profiles.xml:system/etc/media_profiles.xml \
     device/intel/cic/cic_dev/init.cic_dev.rc:root/init.cic_dev.rc
 
+PRODUCT_COPY_FILES += \
+    device/intel/cic/common/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
+    device/intel/cic/common/audio/usb_audio_policy_configuration.xml:system/etc/usb_audio_policy_configuration.xml \
+    device/intel/cic/common/audio/mixer_paths_0.xml:system/etc/mixer_paths_0.xml \
+    device/intel/cic/common/audio/default_volume_tables.xml:system/etc/default_volume_tables.xml \
+    device/intel/cic/common/audio/audio_policy_volumes.xml:system/etc/audio_policy_volumes.xml \
 
 ifeq ($(TARGET_USE_GRALLOC_VHAL), true)
 PRODUCT_COPY_FILES += \
@@ -46,6 +52,7 @@ PRODUCT_PACKAGES += \
     libGLES_mesa \
     libdrm \
     libdrm_intel \
+    audio.primary.$(TARGET_PRODUCT) \
     libsync \
     Browser2 \
     auto_start_apk.sh
