@@ -52,3 +52,6 @@ INTEL_VA := true
 INTEL_STAGEFRIGHT := true
 USE_MEDIASDK := true
 BOARD_HAVE_MEDIASDK_OPEN_SOURCE := true
+
+# Use XML audio policy configuration file
+USE_XML_AUDIO_POLICY_CONF ?= 1
