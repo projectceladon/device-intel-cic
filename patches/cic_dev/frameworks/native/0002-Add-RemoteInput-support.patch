@@ -1,7 +1,7 @@
-From d2959288a0dce570b4da2bae86a315b92ebdf4c5 Mon Sep 17 00:00:00 2001
+From d0f742e76874faf55d4c502017241c67ff06cb17 Mon Sep 17 00:00:00 2001
 From: Marc Mao <marc.mao@intel.com>
 Date: Thu, 22 Aug 2019 13:20:09 +0800
-Subject: [PATCH 2/2] Add RemoteInput support
+Subject: [PATCH] Add RemoteInput support
 
 Change-Id: I03fd4e105fdd6f5a23c4e4ee59c9ac5825b812d9
 Tracked-On:
@@ -10,8 +10,8 @@ Signed-off-by: Marc Mao <marc.mao@intel.com>
  services/inputflinger/Android.bp      |   1 +
  services/inputflinger/EventHub.cpp    |  14 +-
  services/inputflinger/EventHub.h      |   8 +
- services/inputflinger/RemoteInput.cpp | 393 ++++++++++++++++++++++++++
- 4 files changed, 415 insertions(+), 1 deletion(-)
+ services/inputflinger/RemoteInput.cpp | 400 ++++++++++++++++++++++++++
+ 4 files changed, 422 insertions(+), 1 deletion(-)
  create mode 100644 services/inputflinger/RemoteInput.cpp
 
 diff --git a/services/inputflinger/Android.bp b/services/inputflinger/Android.bp
@@ -93,10 +93,10 @@ index 66bc29456..c1a52c224 100644
          Device* next;
 diff --git a/services/inputflinger/RemoteInput.cpp b/services/inputflinger/RemoteInput.cpp
 new file mode 100644
-index 000000000..d0d667469
+index 000000000..a94f7717f
 --- /dev/null
 +++ b/services/inputflinger/RemoteInput.cpp
-@@ -0,0 +1,393 @@
+@@ -0,0 +1,400 @@
 +
 +#define LOG_TAG "EventHub"
 +#define LOG_NDEBUG 0
@@ -152,6 +152,13 @@ index 000000000..d0d667469
 +        ALOGE("could not open %s, %s\n", devicePath, strerror(errno));
 +        return -1;
 +    }
++
++    struct stat st;
++    __mode_t mod = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
++    if (fstat(fd, &st) == 0) {
++        mod |= st.st_mode;
++    }
++    chmod(devicePath, mod);
 +
 +    int driverVersion = 0x00010000;
 +    InputDeviceIdentifier identifier;
@@ -485,7 +492,7 @@ index 000000000..d0d667469
 +                break;
 +        }
 +    }
-+        
++
 +    return OK;
 +}
 +
