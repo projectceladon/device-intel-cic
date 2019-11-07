@@ -14,6 +14,8 @@
 
 # Houdini support
 TARGET_SUPPORTS_64_BIT_APPS := true
+TARGET_UEFI_ARCH := x86_64
+KERNELFLINGER_SSL_LIBRARY := openssl
 $(call inherit-product, device/intel/cic/common/houdini.mk)
 
 PRODUCT_PACKAGES += libhoudini Houdini
