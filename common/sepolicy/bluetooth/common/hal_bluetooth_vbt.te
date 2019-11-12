@@ -1,0 +1,64 @@
+# For treble mode, the HAL is loaded by a excutable hal service, and
+# framework need request the hal service if it want to operate the
+# device by HAL.
+# For bluetooth, the default hal service is created by Google named
+# android.hardware.bluetooth@1.0-service
+# Google also setup sepolicy types and rules for the hal services, and
+# android.hardware.bluetooth@1.0-service is one of hal services.
+# The sepolicy type and rules for the hal services are created by Google
+# and locate at system/sepolicy/vendor/hal_xxx.te
+# For bluetooth it is hal_bluetooth_default.te, and the content of this
+# file is
+#
+#
+#    type hal_bluetooth_default, domain;
+#    hal_server_domain(hal_bluetooth_default, hal_bluetooth)
+#
+#    type hal_bluetooth_default_exec, exec_type, file_type;
+#    init_daemon_domain(hal_bluetooth_default)
+#
+#    # Logging for backward compatibility
+#    allow hal_bluetooth_default bluetooth_data_file:dir ra_dir_perms;
+#    allow hal_bluetooth_default bluetooth_data_file:file create_file_perms;
+#
+# Google allow vendor to write his own hal service, but do not suggest
+# directly modify the default hal service code. Google also give the reference
+# code(device/linaro/hikey/bluetooth) about how to write vendor's own hal
+# service.
+# For gordon peak, bluetooth hal service need to be changed because some
+# message handling difference with Google's default one. Then the bluetooth
+# hal service for gordon peak is created based on default one.
+# The sepolicy types and rules for gordon peak bluetooth service needs to be
+# created too based on the default one.
+# The following setting are copied from hal_bluetooth_default.te except use
+# extension "vbt" to replace "default".
+
+type hal_bluetooth_vbt, domain;
+hal_server_domain(hal_bluetooth_vbt, hal_bluetooth)
+
+type hal_bluetooth_vbt_exec, exec_type, file_type, vendor_file_type;
+init_daemon_domain(hal_bluetooth_vbt)
+
+set_prop(hal_bluetooth_vbt, vendor_bluetooth_prop)
+# Logging for backward compatibility
+allow hal_bluetooth_vbt bluetooth_data_file:dir ra_dir_perms;
+allow hal_bluetooth_vbt bluetooth_data_file:file create_file_perms;
+
+allow hal_bluetooth_vbt self:socket create_socket_perms;
+
+allowxperm hal_bluetooth_vbt self:socket ioctl {
+  unpriv_sock_ioctls
+  HCIDEVDOWN
+};
+
+allow hal_bluetooth_vbt self:bluetooth_socket create_socket_perms;
+
+allow hal_bluetooth_vbt device:dir read;
+allow hal_bluetooth_vbt usb_device:chr_file rw_file_perms;
+allow hal_bluetooth_vbt usb_device:dir r_dir_perms;
+allow hal_bluetooth_vbt self:netlink_kobject_uevent_socket { create bind setopt read };
+
+allowxperm hal_bluetooth_vbt self:bluetooth_socket ioctl {
+  unpriv_sock_ioctls
+  HCIDEVDOWN
+};

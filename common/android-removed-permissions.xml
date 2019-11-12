@@ -20,8 +20,6 @@
     <!-- Disallow device admin and profile owner on Anbox-->
 
     <!-- Disable support for hardware we don't support -->
-    <unavailable-feature name="android.hardware.bluetooth" />
-    <unavailable-feature name="android.hardware.bluetooth_le" />
     <unavailable-feature name="android.hardware.sensor.compass" />
     <unavailable-feature name="android.hardware.sensor.accelerometer" />
 </permissions>
