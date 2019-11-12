@@ -129,6 +129,13 @@ PRODUCT_PACKAGES += android.hardware.camera.provider@2.4-impl
 PRODUCT_PACKAGES += android.hardware.camera.provider@2.4-external-service
 PRODUCT_COPY_FILES += \
     device/intel/cic/common/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.camera.external.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.external.xml \
+
+# Only include test apps in eng or userdebug builds.
+PRODUCT_PACKAGES_DEBUG += TestingCamera
+
+PRODUCT_PACKAGES += MultiCameraApp
 
 # sdcard
 PRODUCT_COPY_FILES += \

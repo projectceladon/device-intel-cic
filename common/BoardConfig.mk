@@ -86,3 +86,4 @@ DEVICE_PACKAGE_OVERLAYS += device/intel/cic/common/bluetooth/tablet/overlay
 
 BOARD_SEPOLICY_DIRS += device/intel/cic/common/sepolicy
 BOARD_SEPOLICY_DIRS += device/intel/cic/common/sepolicy/bluetooth
+BOARD_SEPOLICY_DIRS += device/intel/cic/common/sepolicy/camera-ext
