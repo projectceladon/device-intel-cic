@@ -1,0 +1,7 @@
+#============= hal_camera_default ==============
+vndbinder_use(hal_camera_default);
+
+allow hal_camera_default gpu_device:chr_file rw_file_perms;
+allow hal_camera_default gpu_device:dir search;
+allow hal_camera_default hal_graphics_allocator_default_tmpfs:file { map read write };
+allow hal_camera_default hal_graphics_mapper_hwservice:hwservice_manager find;

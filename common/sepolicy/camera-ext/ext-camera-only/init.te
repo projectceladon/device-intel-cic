@@ -1,0 +1,6 @@
+#
+# init
+#
+
+# wait on /dev/video0 a shared buffer used for camera processing
+allow init video_device:chr_file getattr;
