@@ -31,11 +31,12 @@ PRODUCT_COPY_FILES += \
     device/intel/cic/cic_dev/init.cic_dev.rc:root/init.cic_dev.rc
 
 PRODUCT_COPY_FILES += \
-    device/intel/cic/common/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml \
-    device/intel/cic/common/audio/usb_audio_policy_configuration.xml:system/etc/usb_audio_policy_configuration.xml \
-    device/intel/cic/common/audio/mixer_paths_0.xml:system/etc/mixer_paths_0.xml \
-    device/intel/cic/common/audio/default_volume_tables.xml:system/etc/default_volume_tables.xml \
-    device/intel/cic/common/audio/audio_policy_volumes.xml:system/etc/audio_policy_volumes.xml \
+    device/intel/cic/common/audio/a2dp_audio_policy_configuration.xml:system/vendor/etc/a2dp_audio_policy_configuration.xml \
+    device/intel/cic/common/audio/audio_policy_configuration.xml:system/vendor/etc/audio_policy_configuration.xml \
+    device/intel/cic/common/audio/usb_audio_policy_configuration.xml:system/vendor/etc/usb_audio_policy_configuration.xml \
+    device/intel/cic/common/audio/mixer_paths_0.xml:system/vendor/etc/mixer_paths_0.xml \
+    device/intel/cic/common/audio/default_volume_tables.xml:system/vendor/etc/default_volume_tables.xml \
+    device/intel/cic/common/audio/audio_policy_volumes.xml:system/vendor/etc/audio_policy_volumes.xml \
 
 ifeq ($(TARGET_USE_GRALLOC_VHAL), true)
 PRODUCT_COPY_FILES += \
@@ -52,7 +53,6 @@ PRODUCT_PACKAGES += \
     libGLES_mesa \
     libdrm \
     libdrm_intel \
-    audio.primary.$(TARGET_PRODUCT) \
     libsync \
     Browser2 \
     auto_start_apk.sh
@@ -60,6 +60,23 @@ PRODUCT_PACKAGES += \
 ifeq ($(TARGET_USE_INTEL_HWCOMPOSER), true)
 PRODUCT_PACKAGES += libva
 endif
+
+# Audio Primary HAL
+PRODUCT_PACKAGES += \
+    audio.primary.$(TARGET_PRODUCT)
+
+# Extended Audio HALs
+PRODUCT_PACKAGES += \
+    audio.r_submix.default \
+    audio.usb.default \
+    audio.usb.$(TARGET_PRODUCT) \
+    audio_policy.default.so \
+    audio_configuration_files
+
+PRODUCT_PACKAGES += \
+    android.hardware.audio.effect@5.0-impl \
+    android.hardware.audio@5.0-impl \
+    android.hardware.audio@2.0-service
 
 ifeq ($(TARGET_USE_GRALLOC_VHAL), true)
 PRODUCT_PACKAGES += gralloc_imp.intel
@@ -81,7 +98,7 @@ PRODUCT_PACKAGES += \
     libmfxhw64 \
     libmfx_omx_core \
     libmfx_omx_components_hw \
-	libstagefrighthw
+    libstagefrighthw
 
 PRODUCT_PACKAGES += \
     i965_drv_video \
