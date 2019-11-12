@@ -1,0 +1,3 @@
+#allow read permission for Bluetooth firmware file
+allow kernel vendor_file:file { open read };
+
