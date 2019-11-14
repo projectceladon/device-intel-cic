@@ -1,0 +1,37 @@
+Format: 1.8
+Date: Thu, 14 Nov 2019 18:23:15 +0530
+Source: linux-4.19.83-celadon
+Binary: linux-image-4.19.83-celadon linux-headers-4.19.83-celadon linux-libc-dev linux-image-4.19.83-celadon-dbg
+Architecture: amd64
+Version: 4.19.83-celadon-1
+Distribution: bionic
+Urgency: low
+Maintainer: intel <intel@intel-NUC7i5DNHE>
+Changed-By: intel <intel@intel-NUC7i5DNHE>
+Description:
+ linux-headers-4.19.83-celadon - Linux kernel headers for 4.19.83-celadon on amd64
+ linux-image-4.19.83-celadon - Linux kernel, version 4.19.83-celadon
+ linux-image-4.19.83-celadon-dbg - Linux kernel debugging symbols for 4.19.83-celadon
+ linux-libc-dev - Linux support headers for userspace development
+Changes:
+ linux-4.19.83-celadon (4.19.83-celadon-1) bionic; urgency=low
+ .
+   * Custom built Linux kernel.
+Checksums-Sha1:
+ 46e3e7beb1de54e932308ef25e525f41ab3a7652 5973 linux-4.19.83-celadon_4.19.83-celadon-1_amd64.buildinfo
+ 7726b385a8f80ef1f1329df5aa0e2fa04c477fa9 11137348 linux-headers-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ 8fd0ab4976bcd34ad6376961626c5c9df43843e6 772864604 linux-image-4.19.83-celadon-dbg_4.19.83-celadon-1_amd64.deb
+ fdc3ce3c48929c6db7b575d0d39d94af9c6982f8 53879580 linux-image-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ f1994a5db97d3f6a2ae1bd42d1927325d53cc539 1024828 linux-libc-dev_4.19.83-celadon-1_amd64.deb
+Checksums-Sha256:
+ 8663d5960c29633b179c421e889232ba6d77d06cff05c416ba74c135581aff06 5973 linux-4.19.83-celadon_4.19.83-celadon-1_amd64.buildinfo
+ d09fa60785d9757ac97161b25ef9e105b54b990927da9b193b5002504a4a7531 11137348 linux-headers-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ 6988ccd9ca97628a539fdfcf0aa236f4a25b86688e11f084483fd66f1e90d980 772864604 linux-image-4.19.83-celadon-dbg_4.19.83-celadon-1_amd64.deb
+ f28be99c6e4d1389b6a88fc7cf3204dcb20ddb4a5aaeef2cccbf686e2df49137 53879580 linux-image-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ 5228231d1045664c2d2ded50f6b349a509a567f37cf39fd95fcb97d18b3c45eb 1024828 linux-libc-dev_4.19.83-celadon-1_amd64.deb
+Files:
+ 09499c6020afd5e7ae61381e693422b0 5973 kernel optional linux-4.19.83-celadon_4.19.83-celadon-1_amd64.buildinfo
+ bff2a4d42aaae90a1b480083088671f4 11137348 kernel optional linux-headers-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ 962dfc86ab78863949f01529b34db601 772864604 debug optional linux-image-4.19.83-celadon-dbg_4.19.83-celadon-1_amd64.deb
+ 5dd46eb309fa5170714fddb7a7561244 53879580 kernel optional linux-image-4.19.83-celadon_4.19.83-celadon-1_amd64.deb
+ d0919d43f7eb6b4500800a98da384b70 1024828 devel optional linux-libc-dev_4.19.83-celadon-1_amd64.deb
