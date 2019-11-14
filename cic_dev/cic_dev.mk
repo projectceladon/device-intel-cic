@@ -34,6 +34,7 @@ PRODUCT_COPY_FILES += \
     device/intel/cic/common/audio/a2dp_audio_policy_configuration.xml:system/vendor/etc/a2dp_audio_policy_configuration.xml \
     device/intel/cic/common/audio/audio_policy_configuration.xml:system/vendor/etc/audio_policy_configuration.xml \
     device/intel/cic/common/audio/usb_audio_policy_configuration.xml:system/vendor/etc/usb_audio_policy_configuration.xml \
+    device/intel/cic/common/audio/hdmi_audio_policy_configuration.xml:system/vendor/etc/hdmi_audio_policy_configuration.xml \
     device/intel/cic/common/audio/mixer_paths_0.xml:system/vendor/etc/mixer_paths_0.xml \
     device/intel/cic/common/audio/default_volume_tables.xml:system/vendor/etc/default_volume_tables.xml \
     device/intel/cic/common/audio/audio_policy_volumes.xml:system/vendor/etc/audio_policy_volumes.xml \
