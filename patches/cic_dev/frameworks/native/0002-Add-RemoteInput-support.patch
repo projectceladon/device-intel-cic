@@ -1,4 +1,4 @@
-From d0f742e76874faf55d4c502017241c67ff06cb17 Mon Sep 17 00:00:00 2001
+From 54b5198fb13ee2a430ec0c44eec282250d93bf1f Mon Sep 17 00:00:00 2001
 From: Marc Mao <marc.mao@intel.com>
 Date: Thu, 22 Aug 2019 13:20:09 +0800
 Subject: [PATCH] Add RemoteInput support
@@ -10,12 +10,12 @@ Signed-off-by: Marc Mao <marc.mao@intel.com>
  services/inputflinger/Android.bp      |   1 +
  services/inputflinger/EventHub.cpp    |  14 +-
  services/inputflinger/EventHub.h      |   8 +
- services/inputflinger/RemoteInput.cpp | 400 ++++++++++++++++++++++++++
+ services/inputflinger/RemoteInput.cpp | 400 ++++++++++++++++++++++++++++++++++
  4 files changed, 422 insertions(+), 1 deletion(-)
  create mode 100644 services/inputflinger/RemoteInput.cpp
 
 diff --git a/services/inputflinger/Android.bp b/services/inputflinger/Android.bp
-index a9e5a4339..31292728f 100644
+index a9e5a43..3129272 100644
 --- a/services/inputflinger/Android.bp
 +++ b/services/inputflinger/Android.bp
 @@ -23,6 +23,7 @@ cc_library_shared {
@@ -27,7 +27,7 @@ index a9e5a4339..31292728f 100644
  
      shared_libs: [
 diff --git a/services/inputflinger/EventHub.cpp b/services/inputflinger/EventHub.cpp
-index 4d9a2a025..1efca3fbb 100644
+index 4d9a2a0..1efca3f 100644
 --- a/services/inputflinger/EventHub.cpp
 +++ b/services/inputflinger/EventHub.cpp
 @@ -33,7 +33,7 @@
@@ -73,14 +73,13 @@ index 4d9a2a025..1efca3fbb 100644
  
  // ----------------------------------------------------------------------------
 diff --git a/services/inputflinger/EventHub.h b/services/inputflinger/EventHub.h
-index 66bc29456..c1a52c224 100644
+index 66bc294..c1a52c2 100644
 --- a/services/inputflinger/EventHub.h
 +++ b/services/inputflinger/EventHub.h
-@@ -338,6 +338,14 @@ public:
- protected:
+@@ -339,6 +339,14 @@ protected:
      virtual ~EventHub();
  
-+private:
+ private:
 +    struct Device;
 +    bool isRemoteInputDevice(Device* device) const;
 +    status_t openRemoteDeviceLocked(const char *devicePath);
@@ -88,12 +87,13 @@ index 66bc29456..c1a52c224 100644
 +    status_t getRemoteAbsoluteAxisInfoLocked(Device* device, int axis,
 +            RawAbsoluteAxisInfo* outAxisInfo) const;
 +
- private:
++private:
      struct Device {
          Device* next;
+ 
 diff --git a/services/inputflinger/RemoteInput.cpp b/services/inputflinger/RemoteInput.cpp
 new file mode 100644
-index 000000000..a94f7717f
+index 0000000..d730a71
 --- /dev/null
 +++ b/services/inputflinger/RemoteInput.cpp
 @@ -0,0 +1,400 @@
@@ -401,7 +401,7 @@ index 000000000..a94f7717f
 +
 +status_t EventHub::getRemoteAbsoluteAxisValueLocked(Device* device, int32_t axis,
 +                                                    int32_t* outValue) const {
-+    ALOGV("%s:deviceId=%d, axis=%d", __func__, device->id, axis);
++    ALOGV("%s:deviceId=%d, axis=%d", __func__, (device ? device->id : -1), axis);
 +
 +    *outValue = 0;
 +
@@ -438,7 +438,7 @@ index 000000000..a94f7717f
 +
 +status_t EventHub::getRemoteAbsoluteAxisInfoLocked(Device* device, int axis,
 +                                       RawAbsoluteAxisInfo* outAxisInfo) const {
-+    ALOGV("%s:deviceId=%d axis=%d", __func__, device->id, axis);
++    ALOGV("%s:deviceId=%d axis=%d", __func__, (device ? device->id : -1), axis);
 +    outAxisInfo->clear();
 +
 +    if (device && device->hasValidFd() && test_bit(axis, device->absBitmask)) {
@@ -498,5 +498,5 @@ index 000000000..a94f7717f
 +
 +} // namespace android
 -- 
-2.17.1
+2.7.4
 
