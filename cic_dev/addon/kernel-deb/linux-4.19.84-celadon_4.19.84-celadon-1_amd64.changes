@@ -1,0 +1,37 @@
+Format: 1.8
+Date: Wed, 20 Nov 2019 13:56:50 +0530
+Source: linux-4.19.84-celadon
+Binary: linux-image-4.19.84-celadon linux-headers-4.19.84-celadon linux-libc-dev linux-image-4.19.84-celadon-dbg
+Architecture: amd64
+Version: 4.19.84-celadon-1
+Distribution: bionic
+Urgency: low
+Maintainer: jbadrapp <jbadrapp@aosecws-S2600STB>
+Changed-By: jbadrapp <jbadrapp@aosecws-S2600STB>
+Description:
+ linux-headers-4.19.84-celadon - Linux kernel headers for 4.19.84-celadon on amd64
+ linux-image-4.19.84-celadon - Linux kernel, version 4.19.84-celadon
+ linux-image-4.19.84-celadon-dbg - Linux kernel debugging symbols for 4.19.84-celadon
+ linux-libc-dev - Linux support headers for userspace development
+Changes:
+ linux-4.19.84-celadon (4.19.84-celadon-1) bionic; urgency=low
+ .
+   * Custom built Linux kernel.
+Checksums-Sha1:
+ eac680bbe7c7897203aa1604cee73207f50e6afe 5919 linux-4.19.84-celadon_4.19.84-celadon-1_amd64.buildinfo
+ 2efeb84ac174504a7b646ac3d45d328789dfb098 11141336 linux-headers-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ d55858dbaa50b7638a52a1eaecfb333a4fe51f45 776355164 linux-image-4.19.84-celadon-dbg_4.19.84-celadon-1_amd64.deb
+ 458b2529546464cb43210a0c4cb62c753c54d0b1 54078708 linux-image-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ d240ef15c52f93d3f0bfa5c7b1cdfeaf20d78dac 1024752 linux-libc-dev_4.19.84-celadon-1_amd64.deb
+Checksums-Sha256:
+ 5130113609acebb71ad10c0803c2a0d9b7c1e36f121d2185882063e1500c3f48 5919 linux-4.19.84-celadon_4.19.84-celadon-1_amd64.buildinfo
+ 8c3b4893daae6f74fbf92f45a62132333a52f0780edb8e191696148a2c7ba381 11141336 linux-headers-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ d97da33e24d6582ee6e3543f45240400cd1082576bb687cac3ec9cf206c66a5f 776355164 linux-image-4.19.84-celadon-dbg_4.19.84-celadon-1_amd64.deb
+ dce92bf7e6ef2460dc0c90c8d2d423964f6f2866491bf9969b8f3afcac51c36d 54078708 linux-image-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ 558f27407f978ad3b3f63bf0fb2c27805ab16c6ad7877e6e61d1744ca465906f 1024752 linux-libc-dev_4.19.84-celadon-1_amd64.deb
+Files:
+ 22db94eec71960d5f3c80465c63bd769 5919 kernel optional linux-4.19.84-celadon_4.19.84-celadon-1_amd64.buildinfo
+ 49440dda56d3b12acc0085551f6c945d 11141336 kernel optional linux-headers-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ 32db9f63fc115dac3013f10dfe96ed72 776355164 debug optional linux-image-4.19.84-celadon-dbg_4.19.84-celadon-1_amd64.deb
+ 83227842c2188ee5840d7741e9b91a3b 54078708 kernel optional linux-image-4.19.84-celadon_4.19.84-celadon-1_amd64.deb
+ f485ebbc4ab80c50cb3d7b3bfa339e63 1024752 devel optional linux-libc-dev_4.19.84-celadon-1_amd64.deb
