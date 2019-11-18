@@ -5,7 +5,8 @@ echo "Installing Kernel -- START"
 sudo dpkg -i kernel-deb/*.deb
 #sudo sed -i 's/GRUB_HIDDEN_TIMEOUT/#GRUB_HIDDEN_TIMEOUT/g' /etc/default/grub
 a=`grep 'Advanced options for Ubuntu' /boot/grub/grub.cfg | cut -d"'" -f4`
-b=`grep "gnulinux" /boot/grub/grub.cfg | grep -i "celadon" | grep -v recovery | cut -d "'" -f4`
+b1=`grep -r "Source: linux" kernel-deb/  | cut -d' ' -f2`
+b=`grep "gnulinux" /boot/grub/grub.cfg | grep -i "celadon" | grep -v recovery | cut -d "'" -f4 | grep $b1 `
 c="\"$a>$b\""
 echo "Adding option $c to GRUB CONFIG"
 
