@@ -8,3 +8,6 @@ service auto_start_apk /system/bin/auto_start_apk.sh
 
 on property:sys.boot_completed=1
     start auto_start_apk
+
+on boot
+    setprop ro.config.media_vol_default 8
