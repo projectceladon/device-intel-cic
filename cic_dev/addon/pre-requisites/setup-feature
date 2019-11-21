@@ -2,7 +2,7 @@
 # author: sundar.gnanasekaran@intel.com
 
 echo "Installing packages from feature/ -- START"
-sudo dpkg -i $AIC_WORK_DIR/feature/*.deb
+sudo dpkg -i $AIC_WORK_DIR/cfc/*.deb
 echo "Installing packages from feature/ -- DONE"
 
 #Grant permission for cfc.desktop
