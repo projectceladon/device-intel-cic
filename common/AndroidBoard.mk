@@ -1,5 +1,5 @@
 .PHONY: multidroid
-multidroid: droid addon
+multidroid: droid addon kf4cic-$(TARGET_BUILD_VARIANT)
 	@echo Make multidroid image...
 	$(hide) rm -rf $(PRODUCT_OUT)/docker
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/android/root
@@ -10,6 +10,7 @@ multidroid: droid addon
 	$(hide) cp -r $(TOP)/vendor/intel/cic/host/docker/android $(PRODUCT_OUT)/docker
 	$(hide) cp -r $(TOP)/vendor/intel/cic/host/docker/update $(PRODUCT_OUT)/docker
 	$(hide) cp $(TOP)/vendor/intel/cic/host/docker/scripts/aic $(PRODUCT_OUT)
+	$(hide) cp -r $(PRODUCT_OUT)/efi/kf4cic.efi $(PRODUCT_OUT)/kf4cic.efi
 ifneq ($(TARGET_LOOP_MOUNT_SYSTEM_IMAGES), true)
 	$(hide) cp -r $(PRODUCT_OUT)/system $(PRODUCT_OUT)/docker/android/root
 	$(hide) cp -r $(PRODUCT_OUT)/root/* $(PRODUCT_OUT)/docker/android/root
@@ -51,6 +52,7 @@ ifeq ($(TARGET_PRODUCT), cic_dev)
 else
 	tar cvzf $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) -C $(PRODUCT_OUT) aic android.tar.gz aic-manager.tar.gz -C docker update
 endif
+	tar cvzf $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) -C $(PRODUCT_OUT) aic android.tar.gz aic-manager.tar.gz kf4cic.efi -C docker update
 
 .PHONY: cic
 cic: aic

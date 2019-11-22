@@ -17,6 +17,17 @@ TARGET_2ND_ARCH_VARIANT := x86
 
 TARGET_USES_64_BIT_BINDER := true
 
+INTEL_PATH_COMMON := device/intel/common
+INTEL_PATH_BUILD := device/intel/build
+INTEL_PATH_VENDOR := vendor/intel
+
+TARGET_UEFI_ARCH := x86_64
+
+TARGET_USE_TRUSTY := true
+KERNELFLINGER_USE_RPMB := true
+KERNELFLINGER_USE_RPMB_SIMULATE := true
+KERNELFLINGER_SSL_LIBRARY := openssl
+
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 ifeq ($(HOST_OS),linux)
