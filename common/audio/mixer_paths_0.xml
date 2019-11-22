@@ -3,7 +3,7 @@
   <ctl name="Master Playback Volume" value="87" />
   <ctl name="Master Playback Switch" value="1" />
   <ctl name="Headphone Playback Switch" value="1 1" />
-  <ctl name="Speaker Playback Switch" value="0 0" />
+  <ctl name="Speaker Playback Switch" value="1 1" />
   <ctl name="Capture Switch" value="0 0" />
 
   <path name="speaker">
