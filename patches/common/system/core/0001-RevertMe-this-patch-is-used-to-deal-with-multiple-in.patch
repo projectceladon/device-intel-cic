@@ -1,4 +1,4 @@
-From 7f0fa717640934a9fec360e3730e6592b5669b90 Mon Sep 17 00:00:00 2001
+From 09f9fc3bc4af47dfce573e9e8a46d9fea2d46eff Mon Sep 17 00:00:00 2001
 From: Bin Yang <bin.y.yang@intel.com>
 Date: Sun, 2 Jun 2019 20:20:45 +0800
 Subject: [PATCH 1/2] [RevertMe] this patch is used to deal with multiple input
@@ -10,13 +10,13 @@ Change-Id: Ie4f4d847a8fe2bf85df08ad73edfc7992c9cf0da
 Tracked-On:
 Signed-off-by: Bin Yang <bin.y.yang@intel.com>
 ---
- init/devices.cpp | 36 ++++++++++++++++++++++++++++++++++++
+ init/devices.cpp | 42 ++++++++++++++++++++++++++++++++++++++++++
  init/devices.h   |  1 +
- 2 files changed, 37 insertions(+)
+ 2 files changed, 43 insertions(+)
  mode change 100644 => 100755 init/devices.h
 
 diff --git a/init/devices.cpp b/init/devices.cpp
-index ada1e2870..267cd3180 100644
+index ada1e2870..87a42567b 100644
 --- a/init/devices.cpp
 +++ b/init/devices.cpp
 @@ -26,6 +26,7 @@
@@ -27,7 +27,7 @@ index ada1e2870..267cd3180 100644
  #include <private/android_filesystem_config.h>
  #include <selinux/android.h>
  #include <selinux/selinux.h>
-@@ -373,6 +374,38 @@ void DeviceHandler::HandleDevice(const std::string& action, const std::string& d
+@@ -373,6 +374,44 @@ void DeviceHandler::HandleDevice(const std::string& action, const std::string& d
      }
  }
  
@@ -42,6 +42,12 @@ index ada1e2870..267cd3180 100644
 +        LOG(ERROR) << "cannot open input config file %s\n" << conf_file_path;
 +        return true;
 +    }
++
++    if (strstr(path.c_str(), "sound")) {
++            LOG(VERBOSE) << "INPUT-FILTER: sound ** : %s was not filtered.\n" << path;
++            return false;
++        }
++
 +    char* line = NULL;
 +    size_t len = 0;
 +    ssize_t read;
@@ -66,7 +72,7 @@ index ada1e2870..267cd3180 100644
  void DeviceHandler::HandleDeviceEvent(const Uevent& uevent) {
      if (uevent.action == "add" || uevent.action == "change" || uevent.action == "online") {
          FixupSysPermissions(uevent.path, uevent.subsystem);
-@@ -380,6 +413,9 @@ void DeviceHandler::HandleDeviceEvent(const Uevent& uevent) {
+@@ -380,6 +419,9 @@ void DeviceHandler::HandleDeviceEvent(const Uevent& uevent) {
  
      // if it's not a /dev device, nothing to do
      if (uevent.major < 0 || uevent.minor < 0) return;
@@ -91,5 +97,5 @@ index f9035da3d..eea0c6e67
                      const std::vector<std::string>& links) const;
      void HandleDevice(const std::string& action, const std::string& devpath, bool block, int major,
 -- 
-2.21.0
+2.24.0
 
