@@ -63,7 +63,13 @@ on property:sys.usb.config=ptp,adb && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idProduct 0x5207
 
 on property:sys.usb.config=adb && property:sys.usb.configfs=1
-    write /config/usb_gadget/g1/idProduct 0x5208
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    write /config/usb_gadget/g1/idVendor 0x8087
+    write /config/usb_gadget/g1/idProduct 0x09ef
+    setprop sys.usb.controller dwc3.0.auto
+    stop adbd
+    start adbd
 
 on property:sys.usb.config=midi && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idProduct 0x5209
