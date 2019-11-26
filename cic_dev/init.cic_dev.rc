@@ -1,5 +1,9 @@
 import /init.base.rc
 
+on init
+    chmod 0755 /device
+    chmod 0755 /device/data
+
 service auto_start_apk /system/bin/auto_start_apk.sh
     user root
     group root
