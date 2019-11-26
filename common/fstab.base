@@ -1,1 +1,2 @@
 /dev/block/vdb /swap swap nodev,noatime,nosuid,errors=panic wait
+/device/data  /data    ext4    noatime,nosuid,nodev,discard,noauto_da_alloc,errors=panic   wait,check,formattable,fileencryption=aes-256-xts:aes-256-cts,quota,reservedsize=50m,latemount,checkpoint=block
