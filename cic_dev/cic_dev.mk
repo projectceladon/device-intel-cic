@@ -56,6 +56,7 @@ PRODUCT_PACKAGES += \
     libdrm_intel \
     libsync \
     Browser2 \
+    RemoteIME \
     auto_start_apk.sh
 
 ifeq ($(TARGET_USE_INTEL_HWCOMPOSER), true)
