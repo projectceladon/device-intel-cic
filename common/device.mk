@@ -104,9 +104,6 @@ PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-service
 
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.0-strongbox-service
-
-PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.0-impl
 
