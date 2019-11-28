@@ -20,6 +20,7 @@ cat << 'EOF' | sudo tee /etc/rc.local
 # start aic
 while (( $(ps -ef | grep -v grep | grep dockerd | wc -l) == 0 )); do sleep 1; done
 /AIC_WORK_DIR/aic start
+modprobe snd-dummy
 exit 0
 EOF
 sudo chmod +x /etc/rc.local
