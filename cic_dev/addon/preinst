@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# author: sundar.gnanasekaran@intel.com
+
+echo "Preparing for cic installation..."
+echo ""
+
+rm -rf /cic
+mkdir /cic
+
