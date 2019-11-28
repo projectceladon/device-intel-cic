@@ -1,0 +1,10 @@
+Package: cic
+Version: 1.0
+Section: custom
+Priority: optional
+Architecture: all
+Depends: cfc
+Essential: no
+Installed-Size: 1024
+Maintainer: Intel
+Description: celadon on container
