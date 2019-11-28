@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# author: sundar.gnanasekaran@intel.com
+
+export AIC_WORK_DIR=/opt/cic/
+
+cuser=`echo $HOME | cut -d'/' -f3`
+
+launch_early() {
+  a=`grep -ir "Alias=rc-local.service" /etc/systemd/system/rc-local.service`
+
+  if [ -z "$a" ] #if script run before -- START
+  then
+    echo "Adding launch-early"
+    sudo ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
+
+cat << EOF | tee -a /etc/systemd/system/rc-local.service
+[Install]
+WantedBy=multi-user.target
+Alias=rc-local.service
+EOF
+
+  fi #if script run before -- END
+
+  rm -f /etc/rc.local
+  touch /etc/rc.local
+
+cat << 'EOF' | tee /etc/rc.local
+#!/bin/sh
+# start aic
+while (( $(ps -ef | grep -v grep | grep dockerd | wc -l) == 0 )); do sleep 1; done
+/AIC_WORK_DIR/aic start
+modprobe snd-dummy
+exit 0
+EOF
+
+  chmod +x /etc/rc.local
+
+  sed -i "s|/AIC_WORK_DIR|$AIC_WORK_DIR|g" /etc/rc.local
+
+}
+
+remove_app() {
+  echo "Update Doeckerfile for remove apk -- START"
+
+  # Note: remove Settings will cause the device can't enter launcher ui issue
+  cd $AIC_WORK_DIR
+  mkdir -p update/root
+#Add following content into update/Dockerfile
+cat << EOF | tee -a update/Dockerfile
+RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/Contacts"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/MusicFX"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/DocumentsUI"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Email"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Calendar"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Music"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/ExactCalculator"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/QuickSearchBox"]
+EOF
+
+  echo "Update Doeckerfile for remove apk -- END"
+
+}
+
+
+install_cic() {
+  cd $AIC_WORK_DIR
+  echo "Installing CIC -- START"
+  ./aic install -u -e -d none
+  echo "Installing CIC -- DONE"
+
+  #Check env path
+  AIC_WORK_DIR_PATH=$AIC_WORK_DIR/workdir
+  a=`grep -rn AIC_WORK_DIR /etc/environment`
+  if [ -z "$a" ]; then
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a /etc/environment
+  else
+    sed -i "s|export AIC_WORK_DIR.*||g" /etc/environment
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a /etc/environment
+  fi
+
+  a=`grep -rn AIC_WORK_DIR $HOME/.bashrc`
+  if [ -z "$a" ]; then
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a $HOME/.bashrc
+  else
+    sed -i "s|export AIC_WORK_DIR.*||g" $HOME/.bashrc
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a $HOME/.bashrc
+  fi
+
+  chown -R $1:$1 /opt/cic
+
+  echo ""
+  echo "Reboot required for changes to be reflected !!"
+  read -p "Press [Enter] key to reboot: "
+  sudo reboot
+
+}
+
+#Install Feature set packages / modules
+#setup_cfc
+
+#Initiate Early-Launch
+launch_early
+
+#Remove un-used apks
+remove_app
+
+#Install CIC
+echo ""
+echo "$cuser"
+echo ""
+
+install_cic $cuser
