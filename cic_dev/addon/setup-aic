@@ -7,7 +7,8 @@ export AIC_WORK_DIR=${PWD}
 ./pre-requisites/setup-feature
 
 #Initiate Early-Launch
-./pre-requisites/launch-early
+#./pre-requisites/launch-early
+./pre-requisites/cic-service
 
 #Remove un-used apks
 ./pre-requisites/remove-app
@@ -35,6 +36,8 @@ else
 	sudo sed -i "s|export AIC_WORK_DIR.*||g" $HOME/.bashrc
 	echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | sudo tee -a $HOME/.bashrc
 fi
+
+sudo systemctl enable cic
 
 echo ""
 echo "Reboot required for changes to be reflected !!"
