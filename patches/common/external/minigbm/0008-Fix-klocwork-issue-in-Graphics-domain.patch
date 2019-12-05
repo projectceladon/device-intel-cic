@@ -1,4 +1,4 @@
-From 7d37a0ed327289c29317495bdcda1bbfd2ecc50f Mon Sep 17 00:00:00 2001
+From dbee546d91e8f541b28942e5e90d801dc083fb1d Mon Sep 17 00:00:00 2001
 From: "Yuanzhe, Liu" <yuanzhe.liu@intel.com>
 Date: Thu, 21 Nov 2019 15:35:49 +0800
 Subject: [PATCH] Fix klocwork issue in Graphics domain
@@ -7,19 +7,15 @@ Change-Id: Ic19d2df06abdb6a6d801dec0eb8738ccc72ace56
 Tracked-On:
 Signed-off-by: Yuanzhe Liu <yuanzhe.liu@intel.com>
 ---
- cros_gralloc/gralloc1/cros_gralloc1_module.cc | 3 +++
+ cros_gralloc/gralloc1/cros_gralloc1_module.cc | 2 ++
  drv.c                                         | 8 ++++++++
- 2 files changed, 11 insertions(+)
+ 2 files changed, 10 insertions(+)
 
 diff --git a/cros_gralloc/gralloc1/cros_gralloc1_module.cc b/cros_gralloc/gralloc1/cros_gralloc1_module.cc
-index afbaa40..03bfd0a 100755
+index afbaa400a227..0eb406144769 100755
 --- a/cros_gralloc/gralloc1/cros_gralloc1_module.cc
 +++ b/cros_gralloc/gralloc1/cros_gralloc1_module.cc
-@@ -1037,14 +1037,17 @@ int CrosGralloc1::HookDevOpen(const struct hw_module_t *mod, const char *name,
-                 pGralloc1->common.module = const_cast<hw_module_t *>(mod);
-                 *device = &pGralloc1->common;                        
-                 ret = 0;
-+                delete pGralloc1;
+@@ -1040,11 +1040,13 @@ int CrosGralloc1::HookDevOpen(const struct hw_module_t *mod, const char *name,
              }
              else {
                  ALOGE("Failed to initialize CrosGralloc1. \n");
@@ -29,12 +25,12 @@ index afbaa40..03bfd0a 100755
          }
          else {
      		ALOGE("Failed to allocate CrosGralloc1");
-+               delete pGralloc1;
++    		delete pGralloc1;
      		ret = -ENOMEM;          
          }
  
 diff --git a/drv.c b/drv.c
-index 903ac6a..c98170d 100755
+index 903ac6a05d42..c98170dbd0cf 100755
 --- a/drv.c
 +++ b/drv.c
 @@ -795,6 +795,8 @@ static drmModeModeInfoPtr generate_mode(int h_pixels, int v_lines, float freq)
@@ -81,5 +77,5 @@ index 903ac6a..c98170d 100755
              }
  
 -- 
-2.21.0
+2.7.4
 
