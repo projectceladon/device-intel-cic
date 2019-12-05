@@ -1,0 +1,45 @@
+From 3a944338e9a6a5304de27da904b4c577bbaecd61 Mon Sep 17 00:00:00 2001
+From: shellyxx <shellyx.xie@intel.com>
+Date: Thu, 5 Dec 2019 17:02:12 +0800
+Subject: [PATCH] Add "persist.intel.statusbar.hidden" to control statusbar
+
+TvStatusBar is a null statusbar, set persist.intel.statusbar.hidden to true,
+when need hidden statusbar.
+
+Tracked-On: OAM-88671
+Signed-off-by: Xie, ShellyX <shellyx.xie@intel.com>
+---
+ .../SystemUI/src/com/android/systemui/SystemBars.java  | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/SystemBars.java b/packages/SystemUI/src/com/android/systemui/SystemBars.java
+index b5093b3ce52..6fed7fc67e9 100644
+--- a/packages/SystemUI/src/com/android/systemui/SystemBars.java
++++ b/packages/SystemUI/src/com/android/systemui/SystemBars.java
+@@ -15,6 +15,7 @@
+ package com.android.systemui;
+ 
+ import android.content.res.Configuration;
++import android.os.SystemProperties;
+ import android.provider.Settings;
+ import android.util.Log;
+ 
+@@ -51,7 +52,14 @@ public class SystemBars extends SystemUI {
+ 
+     private void createStatusBarFromConfig() {
+         if (DEBUG) Log.d(TAG, "createStatusBarFromConfig");
+-        final String clsName = mContext.getString(R.string.config_statusBarComponent);
++        String clsName = mContext.getString(R.string.config_statusBarComponent);
++
++        // TvStatusBar is a null statusbar, set persist.intel.statusbar.hidden to true,
++        // when need to hidden statusbar.
++        if ("true".equals(SystemProperties.get("persist.intel.statusbar.hidden"))) {
++            clsName = "com.android.systemui.statusbar.tv.TvStatusBar";
++        }
++
+         if (clsName == null || clsName.length() == 0) {
+             throw andLog("No status bar component configured", null);
+         }
+-- 
+2.17.1
+
