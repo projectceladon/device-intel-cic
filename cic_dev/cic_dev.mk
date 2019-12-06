@@ -57,6 +57,7 @@ PRODUCT_PACKAGES += \
     libsync \
     Browser2 \
     RemoteIME \
+    ServiceAgent \
     auto_start_apk.sh
 
 ifeq ($(TARGET_USE_INTEL_HWCOMPOSER), true)
