@@ -4,6 +4,7 @@ multidroid: droid addon
 	$(hide) rm -rf $(PRODUCT_OUT)/docker
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/android/root
 	$(hide) cp -r $(TOP)/vendor/intel/cic/host/docker/aic-manager $(PRODUCT_OUT)/docker
+	$(hide) mkdir -p $(PRODUCT_OUT)/docker/aic-manager/data
 	$(hide) cp -r $(TOP)/kernel/modules/cic/ashmem $(PRODUCT_OUT)/docker/aic-manager/data/
 	$(hide) cp -r $(TOP)/kernel/modules/cic/binder $(PRODUCT_OUT)/docker/aic-manager/data/
 	$(hide) cp -r $(TOP)/kernel/modules/cic/mac80211_hwsim $(PRODUCT_OUT)/docker/aic-manager/data/
