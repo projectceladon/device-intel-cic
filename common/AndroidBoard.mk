@@ -53,6 +53,7 @@ ifeq ($(TARGET_PRODUCT), cic_dev)
 	$(hide) (cd $(PRODUCT_OUT)/cic/opt/cic && tar xvf ../../../$(TARGET_AIC_FILE_NAME) aic android.tar.gz aic-manager.tar.gz cfc update)
 	$(hide) mkdir -p $(PRODUCT_OUT)/cic/DEBIAN
 	$(hide) cp -r device/intel/cic/$(TARGET_PRODUCT)/addon/debian/* $(PRODUCT_OUT)/cic/DEBIAN/.
+	$(hide) dpkg -x $(PRODUCT_OUT)/cfc/cfc_0.1.0_x64.deb $(PRODUCT_OUT)/cic/.
 	$(hide) (cd $(PRODUCT_OUT)/ && dpkg-deb --build cic/)
 else
 	tar cvzf $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) -C $(PRODUCT_OUT) aic android.tar.gz aic-manager.tar.gz -C docker update
@@ -67,7 +68,6 @@ publish_ci: aic
 	$(hide) mkdir -p $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
 	$(hide) cp $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
 	$(hide) cp $(PRODUCT_OUT)/cic.deb $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
-	$(hide) cp $(PRODUCT_OUT)/cfc/* $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
 
 # Following 1A CI practice, "publish" is used by buildbot for "latest", "release", etc. Without this
 # target, the build will fail on related buildbot.
@@ -78,4 +78,3 @@ publish: aic
 	$(hide) mkdir -p $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
 	$(hide) cp $(PRODUCT_OUT)/$(TARGET_AIC_FILE_NAME) $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
 	$(hide) cp $(PRODUCT_OUT)/cic.deb $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
-	$(hide) cp $(PRODUCT_OUT)/cfc/* $(TOP)/pub/$(TARGET_PRODUCT)/$(TARGET_BUILD_VARIANT)
