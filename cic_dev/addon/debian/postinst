@@ -106,6 +106,9 @@ install_cic() {
     echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a $HOME/.bashrc
   fi
 
+  cp /usr/share/applications/cfc.desktop ~/Desktop/cfc.desktop
+  chmod +x ~/Desktop/cfc.desktop
+
   chown -R $1:$1 /opt/cic/workdir
   chmod 777 -R /opt/cic/workdir
 
