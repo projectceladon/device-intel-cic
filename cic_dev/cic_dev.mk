@@ -13,6 +13,7 @@
 # limitations under the License.
 
 $(call inherit-product,device/intel/cic/common/device.mk)
+$(call inherit-product,vendor/gms/products/gms.mk)
 
 TARGET_USE_GRALLOC_VHAL := false
 TARGET_USE_HWCOMPOSER_VHAL := true
