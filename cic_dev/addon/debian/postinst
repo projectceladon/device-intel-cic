@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # author: sundar.gnanasekaran@intel.com
 
-export AIC_WORK_DIR=/opt/cic/
-
+export AIC_WORK_DIR=/opt/cic
 cuser=`echo $HOME | cut -d'/' -f3`
 
-launch_early() {
+function launch_early() {
   a=`grep -ir "Alias=rc-local.service" /etc/systemd/system/rc-local.service`
 
   if [ -z "$a" ] #if script run before -- START
@@ -39,10 +38,14 @@ EOF
 
 }
 
-cic_systemd() {
+function cic_systemd() {
+  echo ""
+  echo "*****************************************"
   echo "Adding cic.service to /lib/systemd/system"
+  echo "*****************************************"
+  echo ""
 
-cat << EOF | sudo tee /lib/systemd/system/cic.service
+cat > /lib/systemd/system/cic.service << EOF
 [Unit]
 Description="Start/Stop CIC service"
 [Service]
@@ -55,18 +58,22 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
-sudo sed -i "s|/AIC_WORK_DIR|$AIC_WORK_DIR|g" /lib/systemd/system/cic.service
+sed -i "s|/AIC_WORK_DIR|$AIC_WORK_DIR|g" /lib/systemd/system/cic.service
 
 }
 
 remove_app() {
-  echo "Update Doeckerfile for remove apk -- START"
+  echo ""
+  echo "*********************************"
+  echo "Update Doeckerfile for remove apk"
+  echo "*********************************"
+  echo ""
 
   # Note: remove Settings will cause the device can't enter launcher ui issue
   cd $AIC_WORK_DIR
   mkdir -p update/root
 #Add following content into update/Dockerfile
-cat << EOF | tee -a update/Dockerfile
+cat >> update/Dockerfile << EOF
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/Contacts"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/MusicFX"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/DocumentsUI"]
@@ -77,33 +84,50 @@ RUN ["/system/bin/sh", "-c", "rm -rf /system/app/ExactCalculator"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/QuickSearchBox"]
 EOF
 
-  echo "Update Doeckerfile for remove apk -- END"
 
 }
 
 
 install_cic() {
   cd $AIC_WORK_DIR
-  echo "Installing CIC -- START"
-  ./aic install -u -e -d none
-  echo "Installing CIC -- DONE"
+  echo ""
+  echo "**************"
+  echo "Installing CIC"
+  echo "**************"
+  echo ""
+
+  ./aic install -u -e -d none > /dev/null
+  if [ $? != "0" ]; then
+    echo ""
+    echo "**************************"
+    echo "AIC INSTALL FAILED !!"
+    echo "**************************"
+    echo ""
+    exit 1
+  else
+    echo ""
+    echo "**************************"
+    echo "Installed CIC Successfully"
+    echo "**************************"
+    echo ""
+  fi
 
   #Check env path
   AIC_WORK_DIR_PATH=$AIC_WORK_DIR/workdir
   a=`grep -rn AIC_WORK_DIR /etc/environment`
   if [ -z "$a" ]; then
-    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a /etc/environment
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" >> /etc/environment
   else
     sed -i "s|export AIC_WORK_DIR.*||g" /etc/environment
-    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a /etc/environment
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" >> /etc/environment
   fi
 
   a=`grep -rn AIC_WORK_DIR $HOME/.bashrc`
   if [ -z "$a" ]; then
-    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a $HOME/.bashrc
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" >> $HOME/.bashrc
   else
     sed -i "s|export AIC_WORK_DIR.*||g" $HOME/.bashrc
-    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | tee -a $HOME/.bashrc
+    echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" >> $HOME/.bashrc
   fi
 
   cp /usr/share/applications/cfc.desktop ~/Desktop/cfc.desktop
@@ -115,7 +139,10 @@ install_cic() {
   systemctl enable cic
 
   echo ""
+  echo "**********************************************"
   echo "Reboot required for changes to be reflected !!"
+  echo "**********************************************"
+  echo ""
 
 }
 
@@ -132,8 +159,4 @@ cic_systemd
 remove_app
 
 #Install CIC
-echo ""
-echo "$cuser"
-echo ""
-
 install_cic $cuser
