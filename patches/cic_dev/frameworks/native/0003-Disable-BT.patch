@@ -1,0 +1,24 @@
+From 56834f50b706a50b3968e64aef3ec77336ae6afb Mon Sep 17 00:00:00 2001
+From: sgnanase <sundar.gnanasekaran@intel.com>
+Date: Wed, 11 Dec 2019 13:54:45 +0530
+Subject: [PATCH] Disable BT
+
+---
+ data/etc/tablet_core_hardware.xml | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/data/etc/tablet_core_hardware.xml b/data/etc/tablet_core_hardware.xml
+index 6db2627e1..2d4a1133e 100644
+--- a/data/etc/tablet_core_hardware.xml
++++ b/data/etc/tablet_core_hardware.xml
+@@ -31,7 +31,6 @@
+     <feature name="android.hardware.location.network" />
+     <feature name="android.hardware.sensor.compass" />
+     <feature name="android.hardware.sensor.accelerometer" />
+-    <feature name="android.hardware.bluetooth" />
+     <feature name="android.hardware.touchscreen" />
+     <feature name="android.hardware.touchscreen.multitouch" />
+     <feature name="android.hardware.touchscreen.multitouch.distinct" />
+-- 
+2.24.0
+
