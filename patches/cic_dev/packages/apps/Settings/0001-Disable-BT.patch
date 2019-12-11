@@ -1,0 +1,32 @@
+From c4f9fb3cbce98692009c1ae2d2840c965fc396a1 Mon Sep 17 00:00:00 2001
+From: sgnanase <sundar.gnanasekaran@intel.com>
+Date: Wed, 11 Dec 2019 13:53:18 +0530
+Subject: [PATCH] Disable BT
+
+Tracked-On:
+Change-Id: I44f1eed26fe96031eced87cf1e5f9b2010400c7e
+---
+ src/com/android/settings/SettingsActivity.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/android/settings/SettingsActivity.java b/src/com/android/settings/SettingsActivity.java
+index 29cd77ade6..42371ee7a8 100644
+--- a/src/com/android/settings/SettingsActivity.java
++++ b/src/com/android/settings/SettingsActivity.java
+@@ -650,10 +650,12 @@ public class SettingsActivity extends SettingsDrawerActivity
+                 Utils.isBandwidthControlEnabled() /* enabled */,
+                 isAdmin) || somethingChanged;
+ 
++        Log.e(LOG_TAG, "Jeeva Bluetooth feature is : " + (pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH) ? "enabled" : "disabled"));
+         somethingChanged = setTileEnabled(changedList,
+                 new ComponentName(packageName,
+                         Settings.ConnectedDeviceDashboardActivity.class.getName()),
+-                !UserManager.isDeviceInDemoMode(this) /* enabled */,
++                !UserManager.isDeviceInDemoMode(this) /* enabled */ &&
++                pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH),
+                 isAdmin) || somethingChanged;
+ 
+         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
+-- 
+2.24.0
+
