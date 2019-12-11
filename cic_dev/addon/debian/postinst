@@ -82,6 +82,8 @@ RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Calendar"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Music"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/ExactCalculator"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/QuickSearchBox"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/vendor/etc/permissions/android.hardware.bluetooth.xml"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/vendor/etc/permissions/android.hardware.bluetooth_le.xml"]
 EOF
 
 
