@@ -148,6 +148,32 @@ install_cic() {
 
 }
 
+function pactl_socket() {
+  audio_ipc="$AIC_WORK_DIR_PATH/ipc/config/audio"
+  pactl_default_pa="/home/$1/.pulse/default.pa"
+
+  mkdir -p $audio_ipc
+  chmod -R 777 $audio_ipc
+
+  if [[ ! -f $pactl_default_pa ]]; then
+    mkdir -p `dirname $pactl_default_pa`
+    cp -rf /etc/pulse/default.pa $pactl_default_pa
+  fi
+
+  chown -R $1:$1 `dirname $pactl_default_pa`
+
+  if [[ -z `grep cic_pulseaudio_ $pactl_default_pa` ]]; then
+    echo "load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 sink=@DEFAULT_SINK@ playback=true socket=$audio_ipc/cic_pulseaudio_out.socket" >> $pactl_default_pa
+    echo "load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 source=@DEFAULT_SOURCE@ record=true socket=$audio_ipc/cic_pulseaudio_in.socket" >> $pactl_default_pa
+  fi
+
+  if [[ -z `grep "auto_switch=2" $pactl_default_pa` ]]; then
+    sed -i 's/load-module\ module-bluetooth-policy/load-module\ module-bluetooth-policy\ auto_switch=2/g' $pactl_default_pa
+  fi
+
+}
+
+
 #Install Feature set packages / modules
 #setup_cfc
 
@@ -162,3 +188,6 @@ remove_app
 
 #Install CIC
 install_cic $cuser
+
+#Run pactl
+pactl_socket $cuser
