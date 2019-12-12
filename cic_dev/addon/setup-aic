@@ -37,6 +37,22 @@ else
 	echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | sudo tee -a $HOME/.bashrc
 fi
 
+## Identify & set device serial ID
+serial=`sudo cat /sys/devices/virtual/dmi/id/board_serial`
+if [[ ! -f $AIC_WORK_DIR_PATH/data0/local.prop ]]; then
+  mkdir -p $AIC_WORK_DIR_PATH/data0
+  cd $AIC_WORK_DIR_PATH/data0 && touch local.prop
+  cd $AIC_WORK_DIR
+fi
+
+if [[ -z `grep "ro.serialno" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
+  echo "ro.serialno=$serial" >> $AIC_WORK_DIR_PATH/data0/local.prop
+fi
+
+chown -R $1:$1 $AIC_WORK_DIR_PATH
+chmod 777 -R $AIC_WORK_DIR_PATH
+chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
+
 sudo systemctl enable cic
 
 echo ""
