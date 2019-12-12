@@ -82,6 +82,7 @@ RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Calendar"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Music"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/ExactCalculator"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/QuickSearchBox"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/app/LatinIME"]
 EOF
 
 
@@ -130,12 +131,24 @@ function install_cic() {
     echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" >> $HOME/.bashrc
   fi
 
+  ## Identify & set device serial ID
+  serial=`cat /sys/devices/virtual/dmi/id/board_serial`
+  if [[ ! -f $AIC_WORK_DIR_PATH/data0/local.prop ]]; then
+    mkdir -p $AIC_WORK_DIR_PATH/data0
+    touch /opt/cic/workdir/data0/local.prop
+  fi
+
+  if [[ -z `grep "ro.serialno" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
+    echo "ro.serialno=$serial" >> $AIC_WORK_DIR_PATH/data0/local.prop
+  fi
+
   cp /usr/share/applications/cfc.desktop ~/Desktop/cfc.desktop
   chown $1:$1 /home/$1/Desktop/cfc.desktop
   chmod +x ~/Desktop/cfc.desktop
 
   chown -R $1:$1 /opt/cic/workdir
   chmod 777 -R /opt/cic/workdir
+  chmod 0644 /opt/cic/workdir/data0/local.prop
 
   systemctl enable cic
 
