@@ -8,6 +8,7 @@ when need hidden the statusbar.
 
 Tracked-On: OAM-88704
 Signed-off-by: Xie, ShellyX <shellyx.xie@intel.com>
+Change-Id: I94143717d84bf844b676207020a1010c5a1a07e5
 ---
  .../SystemUI/src/com/android/systemui/SystemBars.java  | 10 +++++++++-
  1 file changed, 9 insertions(+), 1 deletion(-)
