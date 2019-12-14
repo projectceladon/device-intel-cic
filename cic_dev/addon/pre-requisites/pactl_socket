@@ -1,26 +1,13 @@
 #!/usr/bin/env bash
 # author: sundar.gnanasekaran@intel.com
 
-
 audio_ipc="$AIC_WORK_DIR/workdir/ipc/config/audio"
 pactl_default_pa="/etc/pulse/default.pa"
 
 mkdir -p $audio_ipc
 chmod -R 777 $audio_ipc
 
-#if [[ ! -f $pactl_default_pa ]]; then
-#  mkdir -p `dirname $pactl_default_pa`
-#  cp -rf /etc/pulse/default.pa $pactl_default_pa
-#fi
-
-#chown -R $1:$1 `dirname $pactl_default_pa`
-
-if [[ `grep cic_pulseaudio_ $pactl_default_pa` ]]; then
-  sudo sed -ni '/cic_pulseaudio/!p' $pactl_default_pa 
-fi
-  
-echo "load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 sink=@DEFAULT_SINK@ playback=true socket=$audio_ipc/cic_pulseaudio_out.socket" | sudo tee -a $pactl_default_pa
-echo "load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 source=@DEFAULT_SOURCE@ record=true socket=$audio_ipc/cic_pulseaudio_in.socket" | sudo tee -a $pactl_default_pa
+sudo cp pre-requisites/create_pasocket.sh /etc/profile.d/.
 
 if [[ -z `grep "auto_switch=2" $pactl_default_pa` ]]; then
   sudo sed -i 's/load-module\ module-bluetooth-policy/load-module\ module-bluetooth-policy\ auto_switch=2/g' $pactl_default_pa

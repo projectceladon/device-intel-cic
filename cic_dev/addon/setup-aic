@@ -49,9 +49,9 @@ if [[ -z `grep "ro.serialno" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
   echo "ro.serialno=$serial" >> $AIC_WORK_DIR_PATH/data0/local.prop
 fi
 
-chown -R $1:$1 $AIC_WORK_DIR_PATH
-chmod 777 -R $AIC_WORK_DIR_PATH
-chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
+#chown -R $1:$1 $AIC_WORK_DIR_PATH
+sudo chmod 777 -R $AIC_WORK_DIR_PATH
+sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
 
 sudo systemctl enable cic
 
