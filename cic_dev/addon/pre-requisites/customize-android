@@ -1,0 +1,145 @@
+#!/bin/bash
+
+#
+# This script is used to customize android by updating the update/Dockerfile before installing cic
+# It has the following features:
+#  1.Add new apps into system
+#    a.For adding apps, just put the apk file under update/root/sytem/app/<app-name>/, no need any configure 
+#  2.Remove apps, please configure APPS_TO_BE_REMOVED.
+#  3.Remove files, please configure FILES_TO_BE_REMOVED.
+#  4.Set system properties, please configure PROPERTIES.
+#
+# Please edit the CUSTOMIZED CONTENT and run this script under the aic setup folder
+
+############################CUSTOMIZED CONTENT###########################
+
+#---------------------------
+# 1.Remove apps
+# Note: remove Settings will cause the device can't enter launcher ui issue
+#---------------------------
+#Edit APPS_TO_BE_REMOVED like the following:
+#   APPS_TO_BE_REMOVED=\
+#   "
+#   /system/priv-app/DocumentsUI
+#   /system/priv-app/MusicFX
+#   "
+
+#By default, nothing to be removed, keep it like this:
+APPS_TO_BE_REMOVED=\
+"
+"
+
+#---------------------------
+# 2.Remove files
+#---------------------------
+#Edit FILES_TO_BE_REMOVED like the following:
+#   FILES_TO_BE_REMOVED=\
+#   "
+#   /system/vendor/etc/permissions/android.hardware.bluetooth.xml
+#   /system/vendor/etc/permissions/android.hardware.bluetooth_le.xml
+#   "
+
+#By default, nothing to be removed, keep it like this:
+FILES_TO_BE_REMOVED=\
+"
+"
+
+#---------------------------
+# 3.Set properties
+#---------------------------
+#Edit PROPERTIES like the following:
+#    PROPERTIES=\
+#    "
+#    persist.sys.locale=zh-Hans-CN
+#    sys.display.size=1280x800
+#    "
+
+#By default, nothing to be set, keep it like this:
+PROPERTIES=\
+"
+"
+
+############################CUSTOMIZED CONTENT############################
+
+DOCKER_FILE_PATH=update/Dockerfile
+
+function remove_files {
+files=$1
+if [ `echo $files | sed 's/ //g'` ]
+then
+    #do nothing
+    :
+else
+   #echo "nothing to be removed"
+   return
+fi
+
+#Add the head
+echo 'RUN ["/system/bin/sh", "-c","\' >> $DOCKER_FILE_PATH
+
+#Add the content
+for file in $files
+do   
+    echo "rm -rf $file && \\" >> $DOCKER_FILE_PATH
+done
+
+#Add the tail
+echo "echo\"]" >> $DOCKER_FILE_PATH
+
+}
+
+function set_properties {
+properties=$1
+if [ `echo $properties | sed 's/ //g'` ]
+then
+    #do nothing
+    :
+else
+   #echo "nothing to be set"
+   return
+fi
+
+#Add the head
+echo 'RUN ["/system/bin/sh", "-c","\' >> $DOCKER_FILE_PATH
+
+#Add the content
+for p in $properties
+do
+    key=`echo $p | cut -d '=' -f 1`
+#remove the old if existed. DO NOT indent EOF
+cat >> $DOCKER_FILE_PATH << EOF
+sed -i \"s|$key=.*||g\" /system/build.prop && \\
+EOF
+
+#append the new. DO NOT indent EOF
+cat >> $DOCKER_FILE_PATH << EOF
+echo \"$p\" | tee -a /system/build.prop && \\
+EOF
+
+done
+
+#Add the tail
+echo "echo\"]" >> $DOCKER_FILE_PATH
+
+}
+
+echo "===customize android -- START"
+#make sure root dir exist for Dockerfile
+mkdir -p update/root
+
+echo "---Update Doeckerfile for apps to be removed -- START"
+echo -e "\n#remove apps" >> $DOCKER_FILE_PATH
+remove_files "$APPS_TO_BE_REMOVED"
+echo "---Update Doeckerfile for apps to be removed -- END"
+
+echo "---Update Doeckerfile for files to be removed -- START"
+echo -e "\n#remove files" >> $DOCKER_FILE_PATH
+remove_files "$FILES_TO_BE_REMOVED"
+echo "---Update Doeckerfile for files to be removed -- END"
+
+echo "---Update Doeckerfile for properties -- START"
+echo -e "\n#set properties" >> $DOCKER_FILE_PATH
+set_properties "$PROPERTIES"
+echo "---Update Doeckerfile for properties -- END"
+
+echo "===customize android -- END"
