@@ -10,8 +10,8 @@ export AIC_WORK_DIR=${PWD}
 #./pre-requisites/launch-early
 ./pre-requisites/cic-service
 
-#Remove un-used apks
-./pre-requisites/remove-app
+#customize android (add/remove apps etc.)
+./pre-requisites/customize-android
 
 #Install CIC
 cd $AIC_WORK_DIR
