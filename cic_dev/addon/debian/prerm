@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pid=$(ps aux|grep mwc|grep cfc|awk '{ print $2 }')
+
+if [ "$pid" != "" ]; then
+    echo "kill the running apps $pid"
+    kill -9 $pid
+fi
