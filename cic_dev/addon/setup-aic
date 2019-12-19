@@ -37,6 +37,8 @@ else
 	echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | sudo tee -a $HOME/.bashrc
 fi
 
+sudo chmod 777 -R $AIC_WORK_DIR_PATH
+
 sudo systemctl enable cic
 
 echo ""
