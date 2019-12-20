@@ -141,6 +141,14 @@ function install_cic() {
     echo "ro.serialno=$serial" >> $AIC_WORK_DIR_PATH/data0/local.prop
   fi
 
+  #set Time zone property
+  localtz=$(timedatectl status |grep "Time zone")
+  localtzarr=(${localtz// / })
+  shorttz=${localtzarr[2]}
+  if [[ -z `grep "persist.sys.timezone" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
+    echo "persist.sys.timezone=$shorttz" >> $AIC_WORK_DIR_PATH/data0/local.prop
+  fi
+
   cp /usr/share/applications/cfc.desktop ~/Desktop/cfc.desktop
   chown $1:$1 /home/$1/Desktop/cfc.desktop
   chmod +x ~/Desktop/cfc.desktop
