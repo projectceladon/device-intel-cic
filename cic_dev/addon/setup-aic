@@ -62,6 +62,9 @@ sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
 
 sudo systemctl enable cic
 
+#Run pactl
+./pre-requisites/pactl_socket $(whoami)
+
 echo ""
 echo "Reboot required for changes to be reflected !!"
 read -p "Press Enter key to reboot: "
