@@ -10,8 +10,8 @@ Description="Start/Stop CIC service"
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
 Type=oneshot
-ExecStart=/bin/bash aic start
-ExecStop=/bin/bash aic stop
+ExecStart=/bin/bash cic.sh start
+ExecStop=/bin/bash cic.sh stop
 RemainAfterExit=yes
 
 [Install]
