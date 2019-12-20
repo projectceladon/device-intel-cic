@@ -8,6 +8,8 @@ mkdir -p update/root
 #Add following content into update/Dockerfile
 cat << EOF | sudo tee -a update/Dockerfile
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/Contacts"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/vendor/etc/permissions/android.hardware.bluetooth.xml"]
+RUN ["/system/bin/sh", "-c", "rm -rf /system/vendor/etc/permissions/android.hardware.bluetooth_le.xml"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/MusicFX"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/priv-app/DocumentsUI"]
 RUN ["/system/bin/sh", "-c", "rm -rf /system/app/Email"]
