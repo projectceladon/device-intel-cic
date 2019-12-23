@@ -1,0 +1,32 @@
+From c95ee3b57cfb3baecfa8717eb3920f57397d6eed Mon Sep 17 00:00:00 2001
+From: Kaushal Billore <kaushal.billore@intel.com>
+Date: Mon, 23 Dec 2019 21:50:09 +0530
+Subject: [PATCH] Camera: Map external to back camera for lagacy API
+
+Signed-off-by: Kaushal Billore <kaushal.billore@intel.com>
+Signed-off-by: Jeevaka Badrappan <jeevaka.badrappan@intel.com>
+---
+ services/camera/libcameraservice/common/CameraProviderManager.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/camera/libcameraservice/common/CameraProviderManager.cpp b/services/camera/libcameraservice/common/CameraProviderManager.cpp
+index 43f1a91..8a4a6d2 100644
+--- a/services/camera/libcameraservice/common/CameraProviderManager.cpp
++++ b/services/camera/libcameraservice/common/CameraProviderManager.cpp
+@@ -971,11 +971,11 @@ status_t CameraProviderManager::ProviderInfo::DeviceInfo1::getCameraInfo(
+     }
+ 
+     switch(cInfo.facing) {
++        case device::V1_0::CameraFacing::EXTERNAL:
++            // Map external to back for legacy API
+         case device::V1_0::CameraFacing::BACK:
+             info->facing = hardware::CAMERA_FACING_BACK;
+             break;
+-        case device::V1_0::CameraFacing::EXTERNAL:
+-            // Map external to front for legacy API
+         case device::V1_0::CameraFacing::FRONT:
+             info->facing = hardware::CAMERA_FACING_FRONT;
+             break;
+-- 
+2.7.4
+
