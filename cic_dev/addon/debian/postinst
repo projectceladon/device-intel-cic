@@ -50,7 +50,8 @@ cat > /lib/systemd/system/cic.service << EOF
 Description="Start/Stop CIC service"
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
-Type=oneshot
+Type=notify
+NotifyAccess=all
 ExecStart=/bin/bash aic start
 ExecStop=/bin/bash aic stop
 RemainAfterExit=yes
