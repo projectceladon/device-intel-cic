@@ -9,7 +9,8 @@ Description="Start/Stop CIC service"
 
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
-Type=oneshot
+Type=notify
+NotifyAccess=all
 ExecStart=/bin/bash cic.sh start
 ExecStop=/bin/bash cic.sh stop
 RemainAfterExit=yes
