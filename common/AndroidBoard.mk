@@ -24,7 +24,24 @@ else
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/aic-manager/images
 	$(hide) ln -t $(PRODUCT_OUT)/docker/aic-manager/images $(PRODUCT_OUT)/system.img
 endif
-
+ifneq ($(wildcard vendor/intel/private),)
+	@echo "Compiling from aic source directory"
+	$(hide) (cd vendor/intel/private/cic-graphic-mdc && git checkout -f && git clean -fd && make)
+	$(hide) (cd vendor/intel/private/cic-graphic-cfc && rm -rf build && mkdir build)
+	$(hide) (cd vendor/intel/private/cic-graphic-cfc/build && cmake ../)
+	$(hide) (cd vendor/intel/private/cic-graphic-cfc/build && make package)
+	$(hide) (cp vendor/intel/private/cic-graphic-cfc/build/*.deb $(PRODUCT_OUT)/cfc/cfc_0.1.0_x64.deb)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/lxc_util/liblxc_util.so $(PRODUCT_OUT)/system/vendor/lib64/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/lxc_util/liblxc_util.so $(PRODUCT_OUT)/system/vendor/lib/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/lxc_util/liblxc_util.so $(PRODUCT_OUT)/docker/android/root/system/vendor/lib64/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/lxc_util/liblxc_util.so $(PRODUCT_OUT)/docker/android/root/system/vendor/lib/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/lxc_util/liblxc_util.so $(PRODUCT_OUT)/docker/aic-manager/bin/graphic/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/display_daemon/util_x11/libutil_x11.so $(PRODUCT_OUT)/docker/aic-manager/bin/graphic/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/display_daemon/util_wayland/libutil_wayland.so $(PRODUCT_OUT)/docker/aic-manager/bin/graphic/.)
+	$(hide) (cp vendor/intel/private/cic-graphic-mdc/display_daemon/util_drm/libutil_drm.so $(PRODUCT_OUT)/docker/aic-manager/bin/graphic/.)
+else
+	@echo "Nothing to do"
+endif
 TARGET_AIC_FILE_NAME := $(TARGET_PRODUCT)-aic-$(BUILD_NUMBER).tar.gz
 
 .PHONY: addon
