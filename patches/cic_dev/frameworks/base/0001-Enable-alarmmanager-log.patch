@@ -1,0 +1,100 @@
+From 438e758942ee8c78c9662a005501ed090322a427 Mon Sep 17 00:00:00 2001
+From: Hongcheng Xie <hongcheng.xie@intel.com>
+Date: Mon, 30 Dec 2019 15:06:50 +0800
+Subject: [PATCH] Enable alarmmanager log
+
+Tracked-On:
+Signed-off-by: Hongcheng Xie <hongcheng.xie@intel.com>
+---
+ .../android/server/AlarmManagerService.java   | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/services/core/java/com/android/server/AlarmManagerService.java b/services/core/java/com/android/server/AlarmManagerService.java
+index 47b646c1a66..3b97153c7f8 100644
+--- a/services/core/java/com/android/server/AlarmManagerService.java
++++ b/services/core/java/com/android/server/AlarmManagerService.java
+@@ -129,7 +129,7 @@ class AlarmManagerService extends SystemService {
+     static final int TYPE_NONWAKEUP_MASK = 0x1; // low bit => non-wakeup
+ 
+     static final String TAG = "AlarmManager";
+-    static final boolean localLOGV = false;
++    static final boolean localLOGV = true; //false;
+     static final boolean DEBUG_BATCH = localLOGV || false;
+     static final boolean DEBUG_VALIDATE = localLOGV || false;
+     static final boolean DEBUG_ALARM_CLOCK = localLOGV || false;
+@@ -538,7 +538,7 @@ class AlarmManagerService extends SystemService {
+                 mLastTickAdded = System.currentTimeMillis();
+             }
+             if (DEBUG_BATCH) {
+-                Slog.v(TAG, "Adding " + alarm + " to " + this);
++                Slog.w(TAG, "Adding " + alarm + " to " + this);
+             }
+             if (alarm.whenElapsed > start) {
+                 start = alarm.whenElapsed;
+@@ -550,7 +550,7 @@ class AlarmManagerService extends SystemService {
+             flags |= alarm.flags;
+ 
+             if (DEBUG_BATCH) {
+-                Slog.v(TAG, "    => now " + this);
++                Slog.w(TAG, "    => now " + this);
+             }
+             return newStart;
+         }
+@@ -1509,7 +1509,7 @@ class AlarmManagerService extends SystemService {
+ 
+         synchronized (mLock) {
+             if (DEBUG_BATCH) {
+-                Slog.v(TAG, "set(" + operation + ") : type=" + type
++                Slog.w(TAG, "set(" + operation + ") : type=" + type
+                         + " triggerAtTime=" + triggerAtTime + " win=" + windowLength
+                         + " tElapsed=" + triggerElapsed + " maxElapsed=" + maxElapsed
+                         + " interval=" + interval + " flags=0x" + Integer.toHexString(flags));
+@@ -2777,7 +2777,7 @@ class AlarmManagerService extends SystemService {
+         }
+         if (didRemove) {
+             if (DEBUG_BATCH) {
+-                Slog.v(TAG, "remove(uid) changed bounds; rebatching");
++                Slog.w(TAG, "remove(uid) changed bounds; rebatching");
+             }
+             rebatchAllAlarmsLocked(true);
+             rescheduleKernelAlarmsLocked();
+@@ -2829,7 +2829,7 @@ class AlarmManagerService extends SystemService {
+         }
+         if (didRemove) {
+             if (DEBUG_BATCH) {
+-                Slog.v(TAG, "remove(package) changed bounds; rebatching");
++                Slog.w(TAG, "remove(package) changed bounds; rebatching");
+             }
+             rebatchAllAlarmsLocked(true);
+             rescheduleKernelAlarmsLocked();
+@@ -2980,6 +2980,10 @@ class AlarmManagerService extends SystemService {
+             }
+ 
+             final int result = set(mNativeData, type, alarmSeconds, alarmNanoseconds);
++            Slog.i(TAG, "xhc---set kernel alarm, now=" + nowElapsed
++                        + " type=" + type + " when=" + when
++                        + " @ (" + alarmSeconds + "," + alarmNanoseconds
++                        + "), ret = " + result + " = " + Os.strerror(result));
+             if (result != 0) {
+                 final long nowElapsed = SystemClock.elapsedRealtime();
+                 Slog.wtf(TAG, "Unable to set kernel alarm, now=" + nowElapsed
+@@ -2990,6 +2994,7 @@ class AlarmManagerService extends SystemService {
+         } else {
+             Message msg = Message.obtain();
+             msg.what = ALARM_EVENT;
++            Slog.w(TAG, "xhc---send ALARM_EVENT:  when=" + when);
+ 
+             mHandler.removeMessages(ALARM_EVENT);
+             mHandler.sendMessageAtTime(msg, when);
+@@ -3526,7 +3531,7 @@ class AlarmManagerService extends SystemService {
+                     // If this was anything besides just a time change, then figure what if
+                     // anything to do about alarms.
+                     synchronized (mLock) {
+-                        if (localLOGV) Slog.v(
++                        if (localLOGV) Slog.w(
+                             TAG, "Checking for alarms... rtc=" + nowRTC
+                             + ", elapsed=" + nowELAPSED);
+ 
+-- 
+2.17.1
+
