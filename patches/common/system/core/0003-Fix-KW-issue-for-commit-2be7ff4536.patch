@@ -1,0 +1,25 @@
+From 417a961557536b0eafffa56eaacbaaad1e73bff4 Mon Sep 17 00:00:00 2001
+From: "Chen, Yu" <yu.y.chen@intel.com>
+Date: Thu, 2 Jan 2020 14:31:50 +0800
+Subject: [PATCH] Fix KW issue for commit 2be7ff4536.
+
+Tracked-On: https://jira.devtools.intel.com/browse/OAM-88951
+---
+ init/devices.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/init/devices.cpp b/init/devices.cpp
+index b6857e9c6..e727a7a3b 100755
+--- a/init/devices.cpp
++++ b/init/devices.cpp
+@@ -393,6 +393,7 @@ bool DeviceHandler::is_filtered(const std::string path) {
+ 
+     if (strstr(path.c_str(), "sound")) {
+             LOG(VERBOSE) << "INPUT-FILTER: sound ** : %s was not filtered.\n" << path;
++            fclose(fp);
+             return false;
+         }
+ 
+-- 
+2.21.0
+
