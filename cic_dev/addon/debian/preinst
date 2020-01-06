@@ -9,6 +9,7 @@ echo ""
 
 function clean_cic {
     rm -rf /opt/cic
+    rm -rf /etc/profile.d/create_pasocket.sh
     mkdir -p /opt/cic
 }
 
