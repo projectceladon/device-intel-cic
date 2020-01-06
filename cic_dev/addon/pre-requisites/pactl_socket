@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# author: sundar.gnanasekaran@intel.com
+
+audio_ipc="$AIC_WORK_DIR/workdir/ipc/config/audio"
+pactl_default_pa="/etc/pulse/default.pa"
+
+mkdir -p $audio_ipc
+chmod -R 777 $audio_ipc
+
+sudo cp pre-requisites/create_pasocket.sh /etc/profile.d/.
+
+if [[ -z `grep "auto_switch=2" $pactl_default_pa` ]]; then
+  sudo sed -i 's/load-module\ module-bluetooth-policy/load-module\ module-bluetooth-policy\ auto_switch=2/g' $pactl_default_pa
+fi
+
