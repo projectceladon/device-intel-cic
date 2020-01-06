@@ -1,0 +1,66 @@
+From 8bc9b02193da1b0bfe373521108104046b6ed6ab Mon Sep 17 00:00:00 2001
+From: Huang Yang <yang.huang@intel.com>
+Date: Mon, 6 Jan 2020 16:12:31 +0800
+Subject: [PATCH] log
+
+Signed-off-by: Huang Yang <yang.huang@intel.com>
+---
+ services/core/java/com/android/server/StorageManagerService.java | 3 ++-
+ services/core/java/com/android/server/am/UserController.java     | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/StorageManagerService.java b/services/core/java/com/android/server/StorageManagerService.java
+index 183be9b..bc0a035 100644
+--- a/services/core/java/com/android/server/StorageManagerService.java
++++ b/services/core/java/com/android/server/StorageManagerService.java
+@@ -2526,7 +2526,8 @@ class StorageManagerService extends IStorageManager.Stub
+             // When a user has secure lock screen, require secret to actually unlock.
+             // This check is mostly in place for emulation mode.
+             if (mLockPatternUtils.isSecure(userId) && ArrayUtils.isEmpty(secret)) {
+-                throw new IllegalStateException("Secret required to unlock secure user " + userId);
++Slog.e(TAG, "HYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYHYH");
++throw new IllegalStateException("Secret required to unlock secure user " + userId);
+             }
+ 
+             try {
+diff --git a/services/core/java/com/android/server/am/UserController.java b/services/core/java/com/android/server/am/UserController.java
+index 4746e12..c03fb31 100644
+--- a/services/core/java/com/android/server/am/UserController.java
++++ b/services/core/java/com/android/server/am/UserController.java
+@@ -1116,6 +1116,8 @@ class UserController implements Handler.Callback {
+     }
+ 
+     boolean unlockUser(final int userId, byte[] token, byte[] secret, IProgressListener listener) {
++
++ Slog.e(TAG, "HYHYHYHY unlockUser called!");
+         if (mInjector.checkCallingPermission(INTERACT_ACROSS_USERS_FULL)
+                 != PackageManager.PERMISSION_GRANTED) {
+             String msg = "Permission Denial: unlockUser() from pid="
+@@ -1128,6 +1130,8 @@ class UserController implements Handler.Callback {
+ 
+         final long binderToken = Binder.clearCallingIdentity();
+         try {
++ Slog.e(TAG, "HYHYHYHY unlockUser call unlockUserCleared! secret length is: " + secret.length);
++
+             return unlockUserCleared(userId, token, secret, listener);
+         } finally {
+             Binder.restoreCallingIdentity(binderToken);
+@@ -1141,6 +1145,7 @@ class UserController implements Handler.Callback {
+      * PIN or pattern.
+      */
+     private boolean maybeUnlockUser(final int userId) {
++ Slog.e(TAG, "HYHYHYHY maybeUnlockUser called!");
+         // Try unlocking storage using empty token
+         return unlockUserCleared(userId, null, null, null);
+     }
+@@ -1156,6 +1161,7 @@ class UserController implements Handler.Callback {
+     private boolean unlockUserCleared(final int userId, byte[] token, byte[] secret,
+             IProgressListener listener) {
+         UserState uss;
++ Slog.e(TAG, "HYHYHYHY unlockUserCleared secret length: " + secret.length);
+         if (!StorageManager.isUserKeyUnlocked(userId)) {
+             final UserInfo userInfo = getUserInfo(userId);
+             final IStorageManager storageManager = getStorageManager();
+-- 
+2.7.4
+
