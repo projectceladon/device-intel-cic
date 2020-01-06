@@ -166,6 +166,20 @@ function install_cic() {
 
 }
 
+function pactl_socket() {
+  audio_ipc="$AIC_WORK_DIR_PATH/ipc/config/audio"
+  pactl_default_pa="/etc/pulse/default.pa"
+
+  mkdir -p $audio_ipc
+  chmod -R 777 $audio_ipc
+
+  if [[ -z `grep "auto_switch=2" $pactl_default_pa` ]]; then
+    sed -i 's/load-module\ module-bluetooth-policy/load-module\ module-bluetooth-policy\ auto_switch=2/g' $pactl_default_pa
+  fi
+
+}
+
+
 #Install Feature set packages / modules
 #setup_cfc
 
@@ -180,3 +194,6 @@ remove_app
 
 #Install CIC
 install_cic $cuser
+
+#Run pactl
+pactl_socket $cuser
