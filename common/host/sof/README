@@ -1,0 +1,57 @@
+# SOF kernel compilation instructions
+
+# Precondition: Kernel already cloned and compiled
+
+cd <linux_git_root_directory>
+git clone https://github.com/thesofproject/kconfig.git
+
+make ARCH=x86_64 clean
+
+# Enable SOF specific kernel configs
+./scripts/kconfig/merge_config.sh .config kconfig/sof-defconfig kconfig/hdaudio-codecs-defconfig kconfig/sof-mach-driver-defconfig
+
+make ARCH=x86_64 -j64 LOCALVERSION=-celadon bindeb-pkg
+
+
+# Non-kernel host side changes for SOF
+
+cd ~/sof
+wget https://github.com/projectceladon/device-intel-cic/tree/celadon/p/mr0/master/common/host/sof/blacklist-dsp.conf
+
+sudo cp blacklist-dsp.conf /etc/modprobe.d/
+
+# Download and copy UCM files needed for Audio playback and capture to work from UI
+wget https://github.com/projectceladon/device-intel-cic/tree/celadon/p/mr0/master/common/host/sof/LENOVO---LNVNB161216.tar
+tar -xzvf LENOVO---LNVNB161216.tar
+sudo cp -r LENOVO---LNVNB161216/ /usr/share/alsa/ucm/
+
+# Download and copy sof firmware to firmware folder
+git clone https://github.com/thesofproject/linux-firmware.git
+sudo mkdir /lib/firmware/intel/sof
+sudo mkdir /lib/firmware/intel/sof-tplg
+sudo cp linux-firmware/intel/sof/cml/intel/sof-cml-v1.3-0f73628.ri /lib/firmware/intel/sof/sof-cml.ri
+
+# Instructions to build topology file
+# Build PC setup instructions
+# https://thesofproject.github.io/latest/getting_started/build-guide/build-from-scratch.html#set-up-build-environment
+
+cd ~
+git clone https://github.com/alsa-project/alsa-lib.git
+cd alsa-lib
+./gitcompile
+sudo make install
+export LD_LIBRARY_PATH=~/alsa-lib/src/.libs:$LD_LIBRARY_PATH
+sudo cp src/.libs/libasound.* /usr/lib/x86_64-linux-gnu/
+cd ../
+git clone https://github.com/alsa-project/alsa-utils.git
+cd alsa-utils/
+./gitcompile
+sudo make install
+cd ../
+git clone https://github.com/thesofproject/sof.git
+cd sof
+git checkout ce80a73a4159f3b66d015067a3473b114675baa4
+./scripts/build-tools.sh
+sudo cp tools/build_tools/topology/sof-hda-generic-2ch.tplg /lib/firmware/intel/sof-tplg/
+
+# Reboot the target device after the above files are copied.
