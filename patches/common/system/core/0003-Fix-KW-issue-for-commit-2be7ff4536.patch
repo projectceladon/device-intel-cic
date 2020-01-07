@@ -1,10 +1,10 @@
 From 0ca00b58cf15cd6768c35f2f8f408ab1d23461c8 Mon Sep 17 00:00:00 2001
 From: "Chen, Yu" <yu.y.chen@intel.com>
 Date: Thu, 2 Jan 2020 14:31:50 +0800
-Subject: [PATCH] Fix KW issue for commit 2be7ff4536.
+Subject: [PATCH] Add Change_Id for patch ab4e08ce7115e4d1fdd7917afd5cf1dff3bb7e98.
 
 Change-Id: Id7202c2490abe34cd1a8c67365da98ecab8d3969
-Tracked-On: https://jira.devtools.intel.com/browse/OAM-88951
+Tracked-On: OAM-88976
 ---
  init/devices.cpp | 1 +
  1 file changed, 1 insertion(+)
