@@ -62,6 +62,11 @@ sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
 
 sudo systemctl enable cic
 
+## Disable USB mass storage devices
+sudo cp $AIC_WORK_DIR_PATH/../pre-requisites/disable_usb_storage /usr/bin/.
+sudo cp $AIC_WORK_DIR_PATH/../pre-requisites/90-usb.core.rules /etc/udev/rules.d/.
+sudo udevadm control --reload-rules
+
 #Run pactl
 ./pre-requisites/pactl_socket $(whoami)
 
