@@ -48,6 +48,10 @@ function cic_systemd() {
 cat > /lib/systemd/system/cic.service << EOF
 [Unit]
 Description="Start/Stop CIC service"
+After=docker.service
+BindsTo=docker.service
+ReloadPropagatedFrom=docker.service
+
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
 Type=notify
@@ -55,6 +59,8 @@ NotifyAccess=all
 ExecStart=/bin/bash cic.sh start
 ExecStop=/bin/bash cic.sh stop
 RemainAfterExit=yes
+TimeoutSec=15sec
+
 [Install]
 WantedBy=multi-user.target
 EOF
