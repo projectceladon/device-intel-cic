@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+devpath=$(sed -e 's!/pci0000:00/!/!' -e 's!/host[0-9]/!/!' -e 's!/target[0-9]:0:0/!/!' -e 's!/[0-9]:0:0:0/!/!' -e 's!/block/!/!' -e 's!/sd[a-z]!/!' -e 's!//sd[a-z][1-9]!/!' /devpath.txt)
+echo 0 > /sys/bus/pci/$devpath/authorized 

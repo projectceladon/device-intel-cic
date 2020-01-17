@@ -188,6 +188,9 @@ function pactl_socket() {
 
 }
 
+function disable_usb_storage() {
+  udevadm control --reload-rules
+}
 
 #Install Feature set packages / modules
 #setup_cfc
@@ -206,3 +209,6 @@ install_cic $cuser
 
 #Run pactl
 pactl_socket $cuser
+
+#Disable USB storage
+disable_usb_storage
