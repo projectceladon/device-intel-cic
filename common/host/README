@@ -74,6 +74,10 @@ make ARCH=x86_64 menuconfig
 # "Device Drivers->Network device support -> Wireless LAN->Intel Wireless WiFi 7000 series driver (new version)"
 # Save the config file to same .config file
 
+# Disable Maximum number of SMP Processors and NUMA Nodes for client usage. Not suit for cloud usage!
+# "Processor type and features -> Maximum number of SMP Processors and NUMA Nodes"
+# Set Maximum number of CPUs (NEW) to 32 for client usage. Not suit for cloud usage!
+# "Processor type and features -> Maximum number of CPUs (NEW)"
 
 
 ### SOF kernel compilation instructions
