@@ -1,0 +1,1 @@
+ACTION=="add", ATTRS{bInterfaceClass}=="08", RUN+="/bin/sh -c 'echo $DEVPATH > /devpath.txt'", RUN+="/bin/sh /usr/bin/disable_usb_storage"
