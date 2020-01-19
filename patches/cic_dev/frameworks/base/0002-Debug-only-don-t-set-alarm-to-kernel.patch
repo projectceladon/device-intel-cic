@@ -1,0 +1,36 @@
+From 8ba02e50c883b83d5e53887145c1497cf361cde5 Mon Sep 17 00:00:00 2001
+From: Hongcheng Xie <hongcheng.xie@intel.com>
+Date: Mon, 30 Dec 2019 15:14:00 +0800
+Subject: [PATCH 2/2] [Debug only]: don't set alarm to kernel
+
+Debug only
+
+Tracked-On:
+Signed-off-by: Hongcheng Xie <hongcheng.xie@intel.com>
+---
+ .../core/java/com/android/server/AlarmManagerService.java | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/AlarmManagerService.java b/services/core/java/com/android/server/AlarmManagerService.java
+index 5aadbdad1a5..3960a87462e 100644
+--- a/services/core/java/com/android/server/AlarmManagerService.java
++++ b/services/core/java/com/android/server/AlarmManagerService.java
+@@ -2979,10 +2979,12 @@ class AlarmManagerService extends SystemService {
+                 alarmNanoseconds = (when % 1000) * 1000 * 1000;
+             }
+ 
+-            final int result = set(mNativeData, type, alarmSeconds, alarmNanoseconds);
+-            if (result != 0) {
++            //final int result = set(mNativeData, type, alarmSeconds, alarmNanoseconds);
++            final int result = 0;
++            if (true || result != 0) {
+                 final long nowElapsed = SystemClock.elapsedRealtime();
+-                Slog.wtf(TAG, "Unable to set kernel alarm, now=" + nowElapsed
++                //Slog.wtf(TAG, "xhc---Debug only and don't set alarm to kernel");
++                Slog.wtf(TAG, "xhc---Unable to set kernel alarm, now=" + nowElapsed
+                         + " type=" + type + " when=" + when
+                         + " @ (" + alarmSeconds + "," + alarmNanoseconds
+                         + "), ret = " + result + " = " + Os.strerror(result));
+-- 
+2.17.1
+
