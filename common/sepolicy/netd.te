@@ -1,1 +1,5 @@
 allow netd usermodehelper:file r_file_perms;
+allow netd kernel:fd use;
+allow netd kernel:fifo_file read;
+allow netd kernel:system module_request;
+allow netd self:capability sys_module;
