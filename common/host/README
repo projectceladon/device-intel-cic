@@ -82,8 +82,10 @@ git clone https://github.com/projectceladon/device-intel-cic.git -b celadon/p/mr
 
 cd ~/kernel/
 git clone https://github.com/thesofproject/kconfig.git
+cd kconfig
 git checkout bb535b3880bf3425b2135b078247b9ba961e607e
 
+cd ..
 git am ~/device-intel-cic/common/host/sof/kernel_patches/*.patch
 
 # Enable SOF specific kernel configs
@@ -120,7 +122,7 @@ Kernel hacking -> Debug Lockups and Hangs ---> Detect Hung Tasks
 Kernel hacking -> Debug Lockups and Hangs ---> Panic (Reboot) On Hung Tasks
 Kernel hacking -> Debug Lockups and Hangs ---> Detect Workqueue Stalls
 Kernel hacking -> Panic on Oops
-Kernel hacking -> panic timeout
+Kernel hacking -> panic timeout -> 10
 Kernel hacking -> Lock Debugging -> RT Mutex debugging, deadlock detection
 Kernel hacking -> Lock Debugging -> Lock debugging: detect incorrect freeing of live locks
 
