@@ -24,3 +24,8 @@ allow init device:dir relabelfrom;
 
 # chown /proc/slabinfo
 allow init proc_slabinfo:file setattr;
+
+allow init kernel:system module_request;
+allow init self:capability2 block_suspend;
+allow init sysfs_wake_lock:file w_file_perms;
+allow init tmpfs:lnk_file create;
