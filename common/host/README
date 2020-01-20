@@ -75,7 +75,6 @@ make ARCH=x86_64 menuconfig
 # Save the config file to same .config file
 
 
-
 ### SOF kernel compilation instructions
 
 cd ~
@@ -100,6 +99,30 @@ make ARCH=x86_64 menuconfig
 # Disable AMD Audio coprocessor support"
 # "Device Drivers->Sound Card support -> Advanced linux sound Architecture -> ALSA for SoC audio support -> AMD Audio Coprocessor Support"
 # "Device Drivers->Sound Card support -> Advanced Linux Sound Architecture -> ALSA for SoC audio support -> AMD Audio Coprocessor-v3.x Support"
+
+# Apply patches specific to storage issues
+# Fix for nvme issue seen with Samsung and Toshiba storage seen on suspend/resume
+git am ~/device-intel-cic/common/host/storage/*.patch
+
+# Don't apply kernel debug patches and also don't enable kernel debugging features in product
+# Apply patches needed to debug kernel panic, mutex and hang issues
+# Apply patch needed to warm reset on kernel panic
+git am ~/device-intel-cic/common/host/debug/*.patch
+
+### Kernel Config Update
+make ARCH=x86_64 menuconfig
+
+# Enable configs to debug kernel panic, mutex and hang issues
+Kernel hacking -> Debug Lockups and Hangs ---> Panic (Reboot) on Soft Lockups
+Kernel hacking -> Debug Lockups and Hangs ---> Detect Hard Lockups
+Kernel hacking -> Debug Lockups and Hangs ---> Panic (Reboot) On Hard Lockups
+Kernel hacking -> Debug Lockups and Hangs ---> Detect Hung Tasks
+Kernel hacking -> Debug Lockups and Hangs ---> Panic (Reboot) On Hung Tasks
+Kernel hacking -> Debug Lockups and Hangs ---> Detect Workqueue Stalls
+Kernel hacking -> Panic on Oops
+Kernel hacking -> panic timeout
+Kernel hacking -> Lock Debugging -> RT Mutex debugging, deadlock detection
+Kernel hacking -> Lock Debugging -> Lock debugging: detect incorrect freeing of live locks
 
 ### Compile kernel
 
