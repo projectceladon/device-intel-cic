@@ -1,1 +1,2 @@
 /dev/block/vdb /swap swap nodev,noatime,nosuid,errors=panic wait
+*/usb*/*/host*/*/block/sd* auto vfat defaults voldmanaged=usbdisk:auto,encryptable=userdata
