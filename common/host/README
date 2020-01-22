@@ -161,19 +161,6 @@ cd ~/sof
 wget https://raw.githubusercontent.com/projectceladon/device-intel-cic/celadon/p/mr0/master/common/host/sof/blacklist-dsp.conf
 sudo cp blacklist-dsp.conf /etc/modprobe.d/
 
-# Download and copy UCM files needed for Audio playback and capture to work from UI
-#From the command "cat /proc/asound/cards", if the device name is "LENOVO---LNVNB161216", use below ucm:
-wget https://github.com/projectceladon/device-intel-cic/raw/celadon/p/mr0/master/common/host/sof/LENOVO---LNVNB161216.tar
-tar -xzvf LENOVO---LNVNB161216.tar
-sudo cp -r LENOVO---LNVNB161216/ /usr/share/alsa/ucm/
-
-#From the command "cat /proc/asound/cards", if the device name is "LENOVO-81UE-LenovoYOGAC640_13IML-LNVNB161216", use below ucm:
-wget https://github.com/projectceladon/device-intel-cic/raw/celadon/p/mr0/master/common/host/sof/LENOVO-81UE-LenovoYOGAC640_13IML-LNVNB161216.tar
-tar -xzvf LENOVO-81UE-LenovoYOGAC640_13IML-LNVNB161216.tar
-sudo cp -r LENOVO-81UE-LenovoYOGAC640_13IML-LNVNB161216/ /usr/share/alsa/ucm/
-
-#If the device name(from "cat /proc/asound/cards") doesn't fall under any of the 2 above, rename the folder/file names as per device name, referring above
-
 # Download and copy sof firmware to firmware folder
 git clone https://github.com/thesofproject/linux-firmware.git
 sudo mkdir /lib/firmware/intel/sof
@@ -207,7 +194,21 @@ sudo cp tools/build_tools/topology/sof-hda-generic-2ch.tplg /lib/firmware/intel/
 
 
 ### Reboot the target device after the above files are copied.
+reboot
+# Select compiled kernel from "Advanced options for Ubuntu"
 
+# Once device is booted to Ubuntu, the sof card should be listed
+# Download and copy UCM files needed for Audio playback and capture to work from UI
+# From the command "cat /proc/asound/cards", if the card name is "sof-skl_hda_card", use below ucm:
+wget https://github.com/projectceladon/device-intel-cic/raw/celadon/p/mr0/master/common/host/sof/sof-skl_hda_card.tar
+sudo tar -C  /usr/share/alsa/ucm/ -xvf sof-skl_hda_card.tar
+
+#If the card name(from "cat /proc/asound/cards") isn't sof-skl_hda_card, rename the folder/file names as per device name, referring above
+#Also, if you have copied any Lonovo specific ucm folder under /usr/share/alsa/ucm, remove those to avoid conflict:
+sudo rm -rf /usr/share/alsa/ucm/LENOVO*
+
+
+### Reboot the target device after the above files are copied.
 Install cic
 reboot
 # Select compiled kernel from "Advanced options for Ubuntu"
