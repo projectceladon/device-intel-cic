@@ -80,7 +80,7 @@ else
   TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI_LIST_32_BIT)
 endif
 
-BOARD_HAVE_BLUETOOTH_INTEL_ICNV := true
+#BOARD_HAVE_BLUETOOTH_INTEL_ICNV := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/intel/cic/common/bluetooth/tablet/
 DEVICE_PACKAGE_OVERLAYS += device/intel/cic/common/bluetooth/tablet/overlay
 
