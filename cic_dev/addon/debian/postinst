@@ -162,6 +162,9 @@ function install_cic() {
   chown $1:$1 /home/$1/Desktop/cfc.desktop
   chmod +x ~/Desktop/cfc.desktop
 
+  chmod a-w /etc/cfc/cfg-ro.json
+  chmod a+w /etc/cfc/cfg-persist.json
+
   chmod 777 -R /opt/cic/workdir
   chmod 0644 /opt/cic/workdir/data0/local.prop
 
