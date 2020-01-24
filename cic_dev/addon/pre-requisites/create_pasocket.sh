@@ -8,5 +8,5 @@ if [[ ! -f "$audio_ipc/cic_pulseaudio_out.socket" && ! -f $audio_ipc/cic_pulseau
 	rm -rf $audio_ipc/cic_pulseaudio_out.socket $audio_ipc/cic_pulseaudio_in.socket
 fi
 
-pactl load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 sink=@DEFAULT_SINK@ playback=true socket=$audio_ipc/cic_pulseaudio_out.socket 
-pactl load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 source=@DEFAULT_SOURCE@ record=true socket=$audio_ipc/cic_pulseaudio_in.socket
+pactl load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 sink=@DEFAULT_SINK@ playback=true socket=$audio_ipc/cic_pulseaudio_out.socket > /dev/null
+pactl load-module module-simple-protocol-unix rate=48000 format=s16le channels=2 source=@DEFAULT_SOURCE@ record=true socket=$audio_ipc/cic_pulseaudio_in.socket > /dev/null
