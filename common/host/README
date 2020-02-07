@@ -72,6 +72,9 @@ make ARCH=x86_64 menuconfig
 
 # Enable Wi-Fi driver
 # "Device Drivers->Network device support -> Wireless LAN->Intel Wireless WiFi 7000 series driver (new version)"
+
+# Enable Uevent notification of Gadget state (needed for secure ADB)
+# "Device Drivers->USB support -> USB Gadget support ->Uevent notification of Gadget state"
 # Save the config file to same .config file
 
 
