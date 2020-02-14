@@ -61,8 +61,6 @@ on fs
 
 on boot
     setprop wifi.interface wlan0
-    # enable fake battery state, details in system/core/healthd/BatteryMonitor.cpp
-    setprop ro.boot.fake_battery 1
 #    start delRedundantInput
 
     # Disable rild
