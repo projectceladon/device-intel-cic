@@ -48,6 +48,10 @@ on init
     copy /dev/cpuset/cpuset.cpus /dev/cpuset/top-app/cpuset.cpus
     copy /dev/cpuset/cpuset.mems /dev/cpuset/top-app/cpuset.mems
 
+    # Support legacy paths for usb storage
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
+
 on fs
     mount_all /fstab.${ro.hardware}
 #on property:ro.boot.container.id=0
