@@ -95,7 +95,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.gralloc_imp=intel \
     ro.hardware.hwcomposer_imp=intel \
     ro.opengles.version=196610 \
-    ro.product.first_api_level=27
+    ro.product.first_api_level=27 \
+    service.adb.tcp.port=5555
 
 
 PRODUCT_NAME := cic
