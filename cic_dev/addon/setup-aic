@@ -37,7 +37,33 @@ else
 	echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | sudo tee -a $HOME/.bashrc
 fi
 
+## Identify & set device serial ID
+serial=`sudo cat /sys/devices/virtual/dmi/id/board_serial`
+if [[ ! -f $AIC_WORK_DIR_PATH/data0/local.prop ]]; then
+  mkdir -p $AIC_WORK_DIR_PATH/data0
+  cd $AIC_WORK_DIR_PATH/data0 && touch local.prop
+  cd $AIC_WORK_DIR
+fi
+
+if [[ -z `grep "ro.serialno" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
+  echo "ro.serialno=$serial" >> $AIC_WORK_DIR_PATH/data0/local.prop
+fi
+
+#set Time zone property
+localtz=$(timedatectl status |grep "Time zone")
+localtzarr=(${localtz// / })
+shorttz=${localtzarr[2]}
+if [[ -z `grep "persist.sys.timezone" $AIC_WORK_DIR_PATH/data0/local.prop` ]]; then
+  echo "persist.sys.timezone=$shorttz" >> $AIC_WORK_DIR_PATH/data0/local.prop
+fi
+
+sudo chmod 777 -R $AIC_WORK_DIR_PATH
+sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
+
 sudo systemctl enable cic
+
+#Run pactl
+./pre-requisites/pactl_socket $(whoami)
 
 echo ""
 echo "Reboot required for changes to be reflected !!"

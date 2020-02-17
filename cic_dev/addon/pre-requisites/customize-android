@@ -27,6 +27,14 @@
 #By default, nothing to be removed, keep it like this:
 APPS_TO_BE_REMOVED=\
 "
+/system/priv-app/Contacts
+/system/priv-app/MusicFX
+/system/priv-app/DocumentsUI
+/system/app/Email
+/system/app/Calendar
+/system/app/Music
+/system/app/ExactCalculator
+/system/app/QuickSearchBox
 "
 
 #---------------------------
@@ -42,6 +50,8 @@ APPS_TO_BE_REMOVED=\
 #By default, nothing to be removed, keep it like this:
 FILES_TO_BE_REMOVED=\
 "
+/system/vendor/etc/permissions/android.hardware.bluetooth.xml
+/system/vendor/etc/permissions/android.hardware.bluetooth_le.xml
 "
 
 #---------------------------
