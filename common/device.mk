@@ -159,4 +159,9 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-service.vbt \
     libbt-vendor
 
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.faketouch.multitouch.distinct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.faketouch.multitouch.distinct.xml \
+    frameworks/native/data/etc/android.hardware.faketouch.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.faketouch.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.faketouch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.faketouch.xml \
+
 PRODUCT_PACKAGE_OVERLAYS += device/intel/cic/common/bluetooth/tablet/overlay
