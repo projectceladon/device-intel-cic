@@ -23,10 +23,17 @@ else
 	$(hide) cp -r $(PRODUCT_OUT)/system/etc $(PRODUCT_OUT)/docker/android/root
 	$(hide) rm -rf $(PRODUCT_OUT)/docker/aic-manager/images
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/aic-manager/images
+	$(hide) rm -rf $(INSTALLED_VERITY_METADATA_IMG)
+	$(hide) python $(HOST_OUT_EXECUTABLES)/build_verity_img.py $(PRODUCT_OUT)/system.img $(INSTALLED_VERITY_METADATA_IMG)
+	$(hide) cp -r $(INSTALLED_VERITY_METADATA_IMG) $(PRODUCT_OUT)/docker/aic-manager/images
+	$(hide) cp -r $(INSTALLED_VERITY_SETUP_TOOL) $(PRODUCT_OUT)/docker/aic-manager/images
 	$(hide) ln -t $(PRODUCT_OUT)/docker/aic-manager/images $(PRODUCT_OUT)/system.img
 endif
 
 TARGET_AIC_FILE_NAME := $(TARGET_PRODUCT)-aic-$(BUILD_NUMBER).tar.gz
+
+INSTALLED_VERITY_SETUP_TOOL := $(TOP)/out/host/linux-x86/bin/cic_veritysetup
+INSTALLED_VERITY_METADATA_IMG := $(PRODUCT_OUT)/verity_metadata
 
 .PHONY: addon
 addon:

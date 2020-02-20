@@ -76,6 +76,10 @@ PRODUCT_PACKAGES += \
     cpio \
     aic-build
 
+PRODUCT_PACKAGES += \
+    build_verity_img.py \
+    cic_veritysetup
+
 # Device modules
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-service \
