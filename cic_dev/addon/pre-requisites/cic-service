@@ -6,13 +6,18 @@ echo "Adding CIC Service"
 cat << EOF | sudo tee /lib/systemd/system/cic.service
 [Unit]
 Description="Start/Stop CIC service"
+After=docker.service
+BindsTo=docker.service
+ReloadPropagatedFrom=docker.service
 
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
-Type=oneshot
-ExecStart=/bin/bash aic start
-ExecStop=/bin/bash aic stop
+Type=notify
+NotifyAccess=all
+ExecStart=/bin/bash cic.sh start
+ExecStop=/bin/bash cic.sh stop
 RemainAfterExit=yes
+TimeoutSec=15sec
 
 [Install]
 WantedBy=multi-user.target
