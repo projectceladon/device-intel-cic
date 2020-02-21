@@ -84,6 +84,14 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant -Dnl80211 -iwlan0 -c/vendor
     oneshot
     disabled
 
+# bugreport is triggered by holding down volume down, volume up
+service bugreport /system/bin/dumpstate -d -p -B -z\
+        -o /data/data/com.android.shell/files/bugreports/bugreport
+    class main
+    disabled
+    oneshot
+    keycodes 114 115
+
 #houdini releated patch start
 on early-init
     mount binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc
