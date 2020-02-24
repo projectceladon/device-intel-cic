@@ -60,6 +60,8 @@ PRODUCT_PACKAGES += \
     ServiceAgent \
     auto_start_apk.sh
 
+PRODUCT_PACKAGES += android.hardware.health@2.0-service.intel
+
 ifeq ($(TARGET_USE_INTEL_HWCOMPOSER), true)
 PRODUCT_PACKAGES += libva
 endif
