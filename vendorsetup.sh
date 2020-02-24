@@ -31,5 +31,4 @@ function lunch {
     device/intel/cic/patches/apply_patch.sh
 }
 
-add_lunch_combo cic-userdebug
 add_lunch_combo cic_dev-userdebug
