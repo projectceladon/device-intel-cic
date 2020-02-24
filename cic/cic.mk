@@ -56,6 +56,10 @@ PRODUCT_PACKAGES += \
     Browser2 \
     audio.primary.$(TARGET_PRODUCT)
 
+PRODUCT_PACKAGES += health
+
+PRODUCT_PACKAGES += android.hardware.health@2.0-service.intel
+
 ifeq ($(TARGET_USE_INTEL_HWCOMPOSER), true)
 PRODUCT_PACKAGES += libva
 endif
