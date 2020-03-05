@@ -16,7 +16,7 @@ export AIC_WORK_DIR=${PWD}
 #Install CIC
 cd $AIC_WORK_DIR
 echo "Installing CIC -- START"
-./aic install -u -e -d none
+./aic install -u -e -d none --host-dns-server
 echo "Installing CIC -- DONE"
 
 #Check env path
