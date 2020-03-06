@@ -22,6 +22,31 @@ on boot
     mkdir /config/usb_gadget/g1/functions/midi.gs5
     mkdir /config/usb_gadget/g1/functions/ncm.gs6
     mkdir /config/usb_gadget/g1/functions/acm.gs7
+
+
+    #UVC gadget function creation
+    mkdir /config/usb_gadget/g1/functions/uvc.usb0
+    mkdir /config/usb_gadget/g1/functions/uvc.usb0/control/header/h
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/control/header/h /config/usb_gadget/g1/functions/uvc.usb0/control/class/fs/h
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/control/header/h /config/usb_gadget/g1/functions/uvc.usb0/control/class/ss/h
+    #1080p MJPEG
+    mkdir /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m
+    mkdir /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/wWidth 1920
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/wHeight 1080
+    copy /vendor/etc/1080p.txt /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/dwFrameInterval
+    #write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/dwDefaultFrameInterval 1000000
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/dwMaxVideoFrameBufferSize 4147200
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/dwMaxBitRate 995328000
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/1080p/dwMinBitRate 165888000
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m/bBitsPerPixel 16
+    mkdir /config/usb_gadget/g1/functions/uvc.usb0/streaming/header/h
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/streaming/mjpeg/m /config/usb_gadget/g1/functions/uvc.usb0/streaming/header/h/u
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/streaming/header/h /config/usb_gadget/g1/functions/uvc.usb0/streaming/class/fs/h
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/streaming/header/h /config/usb_gadget/g1/functions/uvc.usb0/streaming/class/hs/h
+    symlink /config/usb_gadget/g1/functions/uvc.usb0/streaming/header/h /config/usb_gadget/g1/functions/uvc.usb0/streaming/class/ss/h
+    write /config/usb_gadget/g1/functions/uvc.usb0/streaming_maxpacket 3072
+
     mkdir /config/usb_gadget/g1/configs/b.1 0770 shell shell
     mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
     write /config/usb_gadget/g1/os_desc/b_vendor_code 0x1
@@ -64,6 +89,12 @@ on property:sys.usb.config=ptp,adb && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/functions/ptp.gs1/os_desc/interface.MTP/compatible_id "PTP"
     write /config/usb_gadget/g1/os_desc/use 1
     write /config/usb_gadget/g1/idProduct 0x5207
+
+on property:sys.usb.config=uvc && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "uvc_adb"
+    symlink /config/usb_gadget/g1/functions/uvc.usb0 /config/usb_gadget/g1/configs/b.1/f2
+    chmod 666 /dev/video0
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
 
 on property:sys.usb.config=adb && property:sys.usb.configfs=1
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1

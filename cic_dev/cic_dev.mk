@@ -28,7 +28,9 @@ PRODUCT_COPY_FILES += \
     device/intel/cic/common/media_codecs_performance.xml:system/vendor/etc/media_codecs_performance.xml \
     device/intel/cic/common/mfx_omxil_core.conf:system/vendor/etc/mfx_omxil_core.conf \
     device/intel/cic/common/media_profiles.xml:system/vendor/etc/media_profiles_V1_0.xml \
-    device/intel/cic/cic_dev/init.cic_dev.rc:root/init.cic_dev.rc
+    device/intel/cic/cic_dev/init.cic_dev.rc:root/init.cic_dev.rc \
+    device/intel/cic/common/usb/uvc-gadget:system/vendor/bin/uvc-gadget \
+    device/intel/cic/common/usb/1080p.txt:system/vendor/etc/1080p.txt
 
 PRODUCT_COPY_FILES += \
     device/intel/cic/common/audio/a2dp_audio_policy_configuration.xml:system/vendor/etc/a2dp_audio_policy_configuration.xml \
