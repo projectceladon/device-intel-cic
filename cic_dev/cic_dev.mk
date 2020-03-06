@@ -18,6 +18,7 @@ TARGET_USE_GRALLOC_VHAL := false
 TARGET_USE_HWCOMPOSER_VHAL := true
 TARGET_AIC_DEVICE_INPUT_FILTER := true
 TARGET_AIC_PERF := true
+TARGET_LOOP_MOUNT_SYSTEM_IMAGES := true
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.freeform_window_management.xml:system/etc/permissions/android.software.freeform_window_management.xml \
