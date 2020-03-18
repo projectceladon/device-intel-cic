@@ -11,3 +11,4 @@ dalvik.vm.heapminfree=512k
 dalvik.vm.heapmaxfree=8m
 qemu.hw.mainkeys=0
 camera.disable_zsl_mode=1
+ro.config.audio.maxvolume=1
