@@ -9,7 +9,6 @@ multidroid: droid addon
 	$(hide) cp -r $(TOP)/kernel/modules/cic/ashmem/* $(PRODUCT_OUT)/docker/aic-manager/data/ashmem/
 	$(hide) mkdir -p $(PRODUCT_OUT)/docker/aic-manager/data/binder
 	$(hide) cp -r $(TOP)/kernel/modules/cic/binder/* $(PRODUCT_OUT)/docker/aic-manager/data/binder/
-	$(hide) cp -r $(TOP)/kernel/modules/cic/mac80211_hwsim $(PRODUCT_OUT)/docker/aic-manager/data/
 	$(hide) cp -r $(TOP)/vendor/intel/cic/host/docker/android $(PRODUCT_OUT)/docker
 	$(hide) cp -r $(TOP)/vendor/intel/cic/host/docker/update $(PRODUCT_OUT)/docker
 	$(hide) cp $(TOP)/vendor/intel/cic/host/docker/scripts/aic $(PRODUCT_OUT)
