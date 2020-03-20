@@ -34,15 +34,9 @@ Both build machine and target device require [Docker](https://www.docker.com/) t
     $ sudo apt-get update
     $ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-If you would like to use [Docker](https://www.docker.com/) as a non-root user:
-
-    $ sudo usermod -aG docker $USER
-
-Remember to log out and back in for this to take effect!
-
 Verify that the [Docker](https://www.docker.com/) is installed correctly by running the `hello-world` image:
 
-    $ docker run --rm hello-world
+    $ sudo docker run --rm hello-world
 
 ## Download source code
 
@@ -112,8 +106,8 @@ index 2380b8d..fc07e55 100644
 
 CIC runs as a [Docker](https://www.docker.com/) container, so you can use [Docker CLI commands](https://docs.docker.com/engine/reference/commandline/cli) directly for debugging. For example, if you encounter some issues, capture necessary information by the following commands:
 
-    $ docker logs aic-manager 2>&1 | tee aic-manager.log
-    $ docker exec -it android0 sh | tee android.log
+    $ sudo docker logs aic-manager 2>&1 | tee aic-manager.log
+    $ sudo docker exec -it android0 sh | tee android.log
     # getprop
     # logcat -b all
 
