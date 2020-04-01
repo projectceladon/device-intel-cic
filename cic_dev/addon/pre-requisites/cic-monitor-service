@@ -1,0 +1,53 @@
+#!/bin/sh
+
+sudo touch /lib/systemd/system/cic-monitor.service
+
+echo "Adding CIC Monitor Service"
+cat << EOF | sudo tee /lib/systemd/system/cic-monitor.service
+[Unit]
+Description="Start CIC Monitor service"
+
+[Service]
+WorkingDirectory=/AIC_WORK_DIR/
+Type=oneshot
+ExecStart=/usr/bin/python3 /lib/systemd/system/docker-events.py
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo sed -i "s|/AIC_WORK_DIR|$AIC_WORK_DIR|g" /lib/systemd/system/cic-monitor.service
+
+sudo touch /lib/systemd/system/docker-events.py
+echo "Adding event handling file"
+cat << EOF | sudo tee /lib/systemd/system/docker-events.py
+import subprocess as sp
+import os
+
+def handle(event):
+    code = event.split("exitCode=")[1].split(",")[0]
+    if code == '129':
+        print("container reboot ")
+        #on demand
+        #os.system('./aic stop')
+        #os.system('reboot')
+    elif code == '130':
+        os.system('./aic stop')
+        #on demand
+        #os.system('shutdown -h now')
+    else:
+        print("container exit ")
+
+def main():
+    cmd = ["docker", "events", "-f", "name=android0","-f", "event=die"]
+    p = sp.Popen(cmd, stdout=sp.PIPE, universal_newlines=True)
+    for line in p.stdout:
+        handle(line)
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit(0)
+EOF
