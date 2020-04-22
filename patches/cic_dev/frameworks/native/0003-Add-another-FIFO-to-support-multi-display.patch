@@ -1,0 +1,33 @@
+From b7d274b4164c4fe7e1467625b825611e358ebe68 Mon Sep 17 00:00:00 2001
+From: "Yuanzhe, Liu" <yuanzhe.liu@intel.com>
+Date: Wed, 22 Apr 2020 09:03:48 +0800
+Subject: [PATCH] Add another FIFO to support multi display
+
+Temporary wrokaround for KB/Mouse not work in second display.
+
+Tracked-On: OAM-90462
+Signed-Off-By: Liu, Yuanzhe <yuanzhe.liu@intel.com>
+---
+ services/inputflinger/EventHub.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/services/inputflinger/EventHub.cpp b/services/inputflinger/EventHub.cpp
+index 1efca3fbb..935b43519 100644
+--- a/services/inputflinger/EventHub.cpp
++++ b/services/inputflinger/EventHub.cpp
+@@ -1066,7 +1066,11 @@ void EventHub::scanDevicesLocked() {
+     if (mDevices.indexOfKey(VIRTUAL_KEYBOARD_ID) < 0) {
+         createVirtualKeyboardLocked();
+     }
+-    const char *kRemoteInput = "/ipc/input-pipe";
++    const char *kRemoteInput = "/ipc/input-pipe-0";
++    if (openRemoteDeviceLocked(kRemoteInput) < 0) {
++        ALOGE("Failed to open remote device %s\n", kRemoteInput);
++    }
++    const char *kRemoteInput = "/ipc/input-pipe-1";
+     if (openRemoteDeviceLocked(kRemoteInput) < 0) {
+         ALOGE("Failed to open remote device %s\n", kRemoteInput);
+     }
+-- 
+2.21.0
+
