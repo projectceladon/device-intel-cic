@@ -44,7 +44,9 @@ BOARD_SEPOLICY_DIRS += \
         build/target/board/generic_x86/sepolicy
 
 # Wifi.
+BOARD_WLAN_DEVICE           := emulator
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_simulated
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 WIFI_DRIVER_FW_PATH_PARAM   := "/dev/null"
 WIFI_DRIVER_FW_PATH_STA     := "/dev/null"
