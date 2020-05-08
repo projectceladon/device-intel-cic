@@ -112,8 +112,8 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     hostapd
 PRODUCT_COPY_FILES += \
-    device/intel/cic/common/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
-    device/intel/cic/common/wifi/WifiConfigStore.xml:data/misc/wifi/WifiConfigStore.xml \
+    vendor/intel/cic/target/hals/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
+    vendor/intel/cic/target/hals/wifi/WifiConfigStore.xml:data/misc/wifi/WifiConfigStore.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml
 
 # need this for gles libraries to load properly
