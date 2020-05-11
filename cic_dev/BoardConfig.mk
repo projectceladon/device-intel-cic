@@ -1,7 +1,7 @@
 include device/intel/cic/common/BoardConfig.mk
 
 # framework switches 
-TARGET_USES_HWC2 			:= false
+TARGET_USES_HWC2 			:= true
 USE_OPENGL_RENDERER 		:= true
 TARGET_HARDWARE_3D 			:= true
 
