@@ -37,6 +37,8 @@ else
 	echo "export AIC_WORK_DIR=$AIC_WORK_DIR_PATH" | sudo tee -a $HOME/.bashrc
 fi
 
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cfc/mwc/lib" | sudo tee -a /etc/environment
+
 ## Identify & set device serial ID
 serial=`sudo cat /sys/devices/virtual/dmi/id/board_serial`
 if [[ ! -f $AIC_WORK_DIR_PATH/data0/local.prop ]]; then
@@ -61,6 +63,7 @@ sudo chmod 777 -R $AIC_WORK_DIR_PATH
 sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
 
 sudo systemctl enable cic
+sudo cp /opt/cfc/mwc/lib/libbinder.so /usr/lib/x86_64-linux-gnu/
 
 #Run pactl
 ./pre-requisites/pactl_socket $(whoami)
