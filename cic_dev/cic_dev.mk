@@ -83,6 +83,9 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@5.0-impl \
     android.hardware.audio@2.0-service
 
+# Wi-Fi HAL
+PRODUCT_PACKAGES += \
+    libwifi-hal-intel
 ifeq ($(TARGET_USE_GRALLOC_VHAL), true)
 PRODUCT_PACKAGES += gralloc_imp.intel
 else

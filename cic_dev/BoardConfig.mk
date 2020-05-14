@@ -74,3 +74,13 @@ USE_CONFIGURABLE_AUDIO_POLICY := 0
 
 # Use Baseline Legacy Audio HAL
 USE_LEGACY_BASELINE_AUDIO_HAL := true
+
+# Wifi.
+BOARD_WLAN_DEVICE           := iwlwifi
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_intc
+WPA_SUPPLICANT_VERSION      := VER_2_1_DEVEL
+WIFI_DRIVER_FW_PATH_PARAM   := "/dev/null"
+WIFI_DRIVER_FW_PATH_STA     := "/dev/null"
+WIFI_DRIVER_FW_PATH_AP      := "/dev/null"
+WIFI_DRIVER_FW_PATH_P2P     := "/dev/null"
