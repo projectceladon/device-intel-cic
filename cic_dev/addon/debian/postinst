@@ -48,12 +48,19 @@ function cic_systemd() {
 cat > /lib/systemd/system/cic.service << EOF
 [Unit]
 Description="Start/Stop CIC service"
+After=docker.service
+BindsTo=docker.service
+ReloadPropagatedFrom=docker.service
+
 [Service]
 WorkingDirectory=/AIC_WORK_DIR/
-Type=oneshot
+Type=notify
+NotifyAccess=all
 ExecStart=/bin/bash cic.sh start
 ExecStop=/bin/bash cic.sh stop
 RemainAfterExit=yes
+TimeoutSec=15sec
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -155,6 +162,9 @@ function install_cic() {
   chown $1:$1 /home/$1/Desktop/cfc.desktop
   chmod +x ~/Desktop/cfc.desktop
 
+  chmod a-w /etc/cfc/cfg-ro.json
+  chmod a+w /etc/cfc/cfg-persist.json
+
   chmod 777 -R /opt/cic/workdir
   chmod 0644 /opt/cic/workdir/data0/local.prop
 
@@ -181,6 +191,9 @@ function pactl_socket() {
 
 }
 
+function disable_usb_storage() {
+  udevadm control --reload-rules
+}
 
 #Install Feature set packages / modules
 #setup_cfc
@@ -199,3 +212,6 @@ install_cic $cuser
 
 #Run pactl
 pactl_socket $cuser
+
+#Disable USB storage
+disable_usb_storage
