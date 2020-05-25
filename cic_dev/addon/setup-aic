@@ -9,6 +9,7 @@ export AIC_WORK_DIR=${PWD}
 #Initiate Early-Launch
 #./pre-requisites/launch-early
 ./pre-requisites/cic-service
+./pre-requisites/cic-monitor-service
 
 #customize android (add/remove apps etc.)
 ./pre-requisites/customize-android
@@ -61,6 +62,7 @@ sudo chmod 777 -R $AIC_WORK_DIR_PATH
 sudo chmod 0644 $AIC_WORK_DIR_PATH/data0/local.prop
 
 sudo systemctl enable cic
+sudo systemctl enable cic-monitor
 
 #Run pactl
 ./pre-requisites/pactl_socket $(whoami)
