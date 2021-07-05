@@ -2,6 +2,9 @@
 #
 # Product-specific compile-time definitions.
 #
+INTEL_PATH_COMMON := device/intel/common
+INTEL_PATH_BUILD := device/intel/build
+INTEL_PATH_VENDOR := vendor/intel
 
 # The generic product target doesn't have any hardware-specific pieces.
 TARGET_NO_BOOTLOADER := true
